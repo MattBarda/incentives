@@ -1,0 +1,32 @@
+version: '3.7'
+
+networks:
+  incentives:
+
+services:
+
+  # nginx
+  nginx-service:
+    image: nginx:stable-alpine
+    container_name: incentives-nginx-container
+    ports:
+      - "8080:80"
+    volumes:
+      - ./app:/var/www/incentives-program
+      - ./.nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php8-service
+    networks:
+      - incentives
+
+  # php
+  php8-service:
+    container_name: incentives-php8-container
+    build:
+      context: ./.php
+      args:
+        TIMEZONE: ${TIMEZONE}
+    volumes:
+      - ./app:/var/www/incentives-program/
+    networks:
+      - incentives
