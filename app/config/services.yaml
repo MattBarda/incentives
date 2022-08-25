@@ -18,11 +18,33 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
-    Incentive\Application\DTO\UserActionDTO\UserActionUseCase:
-        class: Incentive\Application\Service\UserActionUseCase
-
-    Incentive\UI\Command\UserActionCommand:
+    App\Incentive\UI\Command\UserCreateCommand:
+        class: App\Incentive\UI\Command\UserCreateCommand
         arguments:
-            $userActionUseCase: '@Incentive\Application\DTO\UserActionDTO\UserActionUseCase'
+            $commandBus: '@broadway.command_handling.command_bus'
         tags:
             - { name: 'console.command' }
+
+
+    App\Common\Infrastructure\Cmd\CreateEventStoreCommand:
+        arguments:
+            $connection: "@doctrine.dbal.default_connection"
+            $eventStore: '@broadway.event_store'
+        tags:
+            - { name: 'console.command' }
+
+
+    App\Incentive\Infrastructure\Repository\EventStore\EventStoreUserRepository:
+        arguments:
+            - '@broadway.event_store'
+            - '@broadway.event_handling.event_bus'
+            -
+                - '@broadway.metadata_enriching_event_stream_decorator'
+
+    App\Incentive\Domain\User\CommandHandler\RegisterUserHandler:
+        arguments:
+            $userRepository: '@App\Incentive\Infrastructure\Repository\EventStore\EventStoreUserRepository'
+        tags:
+            - { name: 'broadway.command_handler' }
+
+

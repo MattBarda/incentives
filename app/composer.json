@@ -7,7 +7,12 @@
         "php": ">=8.1",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "broadway/broadway-bundle": "^0.6.1",
+        "broadway/event-store-dbal": "^0.6.0",
+        "doctrine/doctrine-bundle": "^2.7",
+        "doctrine/orm": "^2.13",
         "nesbot/carbon": "^2.61",
+        "ramsey/uuid": "^4.4",
         "symfony/console": "6.1.*",
         "symfony/dotenv": "6.1.*",
         "symfony/flex": "^2",
@@ -29,8 +34,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Incentive\\": "src/Incentive",
-            "Shared\\": "src/Shared"
+            "App\\": "src/"
         }
     },
     "autoload-dev": {

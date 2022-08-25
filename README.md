@@ -19,7 +19,8 @@ As this is a recruitment task I have made certain assumptions, but normally I wo
     - at the time booster started being active?
     - at the time booster stopped being active?
 6. Will it be possible to combine multiple booster actions together in the future?
-7. Are we going to need bonus points history/list?
+7. Are we going to need booster points history/list?
+8. Are the boosters alway active during the same time for each day or are they more dynamic>
 8. Do we need to pay tax on bonus points?
 
 #### additional questions:
@@ -43,3 +44,24 @@ In order to install the project:
 
 ## Usage
 There are few Symfony commands that allow to interact with the Domain:
+
+## Process
+
+The general process Can be described in following steps:
+1. Read the task and sleep on it :)
+2. As I was thinking about the task I was more and more convinced to use the event sourcing approach
+3. From the beginning I wanted to use the DDD approach as well
+4. First code I wrote was the Symfony command as a way to communicate with the application
+5. Then I defined Application service and Application DTO as a layer allowing to comunicate with the domain
+6. AS I haven't done event sourcing in a while the next step was research on event sourcing
+7. After much thinking I got the basic Event sourcing steps together and defined following commands:
+   - registerUser
+   - deliveryComplete
+   - rideshareComplete
+   - rentStart
+   - rentEnd
+   - DefineBooster
+   - MoneyWithdrawn
+8. Then I created the basic folder structure for Event Sourcing
+9. After that I started Thinking about the Aggregate structure
+
