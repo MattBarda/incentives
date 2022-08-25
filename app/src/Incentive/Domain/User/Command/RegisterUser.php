@@ -14,7 +14,7 @@ final class RegisterUser
 
     public function __construct(string $userId, string $userName, string $emailAddress)
     {
-        //TODO validation
+        //TODO sanity validation
         $this->userId = UserId::fromString($userId);
         $this->userName = UserName::fromString($userName);
         $this->emailAddress = EmailAddress::fromString($emailAddress);

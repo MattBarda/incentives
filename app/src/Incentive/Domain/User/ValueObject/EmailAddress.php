@@ -4,10 +4,7 @@ namespace App\Incentive\Domain\User\ValueObject;
 
 final class EmailAddress
 {
-    /**
-     * @var string
-     */
-    private $email;
+    private string $email;
 
     public static function fromString(string $email): EmailAddress
     {

@@ -2,8 +2,13 @@
 
 namespace App\Incentive\Domain\User;
 
+use App\Incentive\Domain\User\DomainEvent\DeliveryCompleted;
 use App\Incentive\Domain\User\DomainEvent\UserWasRegistered;
+use App\Incentive\Domain\User\ValueObject\ActionBonusPoints;
+use App\Incentive\Domain\User\ValueObject\CompletedAt;
+use App\Incentive\Domain\User\ValueObject\DeliveryId;
 use App\Incentive\Domain\User\ValueObject\EmailAddress;
+use App\Incentive\Domain\User\ValueObject\UserBonusPoints;
 use App\Incentive\Domain\User\ValueObject\UserId;
 use App\Incentive\Domain\User\ValueObject\UserName;
 use Broadway\EventSourcing\EventSourcedAggregateRoot;
@@ -13,6 +18,8 @@ class User extends EventSourcedAggregateRoot
     private UserId $userId;
     private UserName $userName;
     private EmailAddress $emailAddress;
+    private UserBonusPoints $userBonusPoints;
+    private array $completedDeliveries = [];
 
     public function getAggregateRootId(): string
     {
@@ -34,17 +41,10 @@ class User extends EventSourcedAggregateRoot
         UserId $userId,
         UserName $name,
         EmailAddress $emailAddress
-    ) {
+    ): void {
         $this->apply(
             new UserWasRegistered($userId, $name, $emailAddress)
         );
-    }
-
-    protected function whenUserWasRegistered(UserWasRegistered $event): void
-    {
-        $this->userId = $event->userId();
-        $this->userName = $event->userName();
-        $this->emailAddress = $event->emailAddress();
     }
 
     protected function applyUserWasRegistered(UserWasRegistered $event): void
@@ -52,6 +52,30 @@ class User extends EventSourcedAggregateRoot
         $this->userId = $event->userId();
         $this->userName = $event->userName();
         $this->emailAddress = $event->emailAddress();
+        $this->userBonusPoints = UserBonusPoints::init();
     }
 
+    public function completeDeliveryWithData(
+        DeliveryId $deliveryId,
+        CompletedAt $completedAt,
+        ActionBonusPoints $actionBonusPoints
+    ): void {
+        $this->apply(
+            new DeliveryCompleted(
+                $this->userId,
+                $deliveryId,
+                $completedAt,
+                $actionBonusPoints
+            )
+        );
+    }
+
+    protected function applyDeliveryCompleted(DeliveryCompleted $event): void
+    {
+        $this->completedDeliveries[$event->deliveryId()->toString()] = $event->completedAt();
+
+        $this->userBonusPoints = UserBonusPoints::addActionBonusPoints(
+            $this->userBonusPoints, $event->actionBonusPoints()
+        );
+    }
 }

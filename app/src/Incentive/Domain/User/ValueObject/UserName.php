@@ -7,31 +7,31 @@ use App\Incentive\Domain\User\Exception\InvalidNameException;
 
 final class UserName
 {
-    private string $name;
+    private string $userName;
 
-    public static function fromString(string $name): self
+    public static function fromString(string $userName): self
     {
-        return new self($name);
+        return new self($userName);
     }
 
-    private function __construct(string $name)
+    private function __construct(string $userName)
     {
         try {
-            Assertion::notEmpty($name);
+            Assertion::notEmpty($userName);
         } catch (\Exception $e) {
             throw InvalidNameException::reason($e->getMessage());
         }
 
-        $this->name = $name;
+        $this->userName = $userName;
     }
 
     public function toString(): string
     {
-        return $this->name;
+        return $this->userName;
     }
 
     public function sameValueAs(self $object): bool
     {
-        return \get_class($this) === \get_class($object) && $this->name === $object->name;
+        return \get_class($this) === \get_class($object) && $this->userName === $object->userName;
     }
 }

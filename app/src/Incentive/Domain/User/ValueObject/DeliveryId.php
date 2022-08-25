@@ -6,7 +6,7 @@ use Assert\Assertion as Assert;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
-final class UserId
+class DeliveryId
 {
     private UuidInterface $uuid;
 
@@ -17,9 +17,7 @@ final class UserId
 
     public static function fromString(string $todoId): self
     {
-        //TODO might be better to throw some sort of domain exception
         Assert::uuid($todoId);
-
         return new self(Uuid::fromString($todoId));
     }
 
@@ -31,10 +29,5 @@ final class UserId
     public function toString(): string
     {
         return $this->uuid->toString();
-    }
-
-    public function sameValueAs(self $other): bool
-    {
-        return \get_class($this) === \get_class($other) && $this->uuid->equals($other->uuid);
     }
 }

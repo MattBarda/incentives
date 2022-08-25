@@ -39,7 +39,7 @@ class UserWasRegistered implements Serializable
     public static function deserialize(array $data): self
     {
         return new self(
-            UserId::fromString($data['basketId']),
+            UserId::fromString($data['userId']),
             UserName::fromString($data['userName']),
             EmailAddress::fromString($data['emailAddress'])
         );

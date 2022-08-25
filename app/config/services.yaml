@@ -25,6 +25,12 @@ services:
         tags:
             - { name: 'console.command' }
 
+    App\Incentive\UI\Command\DeliveryCompleteCommand:
+        arguments:
+            $commandBus: '@broadway.command_handling.command_bus'
+        tags:
+            - { name: 'console.command' }
+
 
     App\Common\Infrastructure\Cmd\CreateEventStoreCommand:
         arguments:
@@ -44,6 +50,13 @@ services:
     App\Incentive\Domain\User\CommandHandler\RegisterUserHandler:
         arguments:
             $userRepository: '@App\Incentive\Infrastructure\Repository\EventStore\EventStoreUserRepository'
+        tags:
+            - { name: 'broadway.command_handler' }
+
+    App\Incentive\Domain\User\CommandHandler\DeliveryCompleteHandler:
+        arguments:
+            $userRepository: '@App\Incentive\Infrastructure\Repository\EventStore\EventStoreUserRepository'
+            $deliveryBonusPoints: 1
         tags:
             - { name: 'broadway.command_handler' }
 
