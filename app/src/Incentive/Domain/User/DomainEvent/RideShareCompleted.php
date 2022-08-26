@@ -3,26 +3,26 @@
 namespace App\Incentive\Domain\User\DomainEvent;
 
 use App\Incentive\Domain\User\ValueObject\ActionBonusPoints;
-use App\Incentive\Domain\User\ValueObject\CompletedAt;
 use App\Incentive\Domain\User\ValueObject\ActionId;
+use App\Incentive\Domain\User\ValueObject\CompletedAt;
 use App\Incentive\Domain\User\ValueObject\UserId;
 use Broadway\Serializer\Serializable;
 
-class DeliveryCompleted implements Serializable
+class RideShareCompleted implements Serializable
 {
     private UserId $userId;
-    private ActionId $deliveryId;
+    private ActionId $rideShareId;
     private CompletedAt $completedAt;
     private ActionBonusPoints $actionBonusPoints;
 
     public function __construct(
         UserId            $userId,
-        ActionId          $deliveryId,
+        ActionId          $rideShareId,
         CompletedAt       $completedAt,
         ActionBonusPoints $actionBonusPoints
     ) {
         $this->userId = $userId;
-        $this->deliveryId = $deliveryId;
+        $this->rideShareId = $rideShareId;
         $this->completedAt = $completedAt;
         $this->actionBonusPoints = $actionBonusPoints;
     }
@@ -32,9 +32,9 @@ class DeliveryCompleted implements Serializable
         return $this->userId;
     }
 
-    public function deliveryId(): ActionId
+    public function rideShareId(): ActionId
     {
-        return $this->deliveryId;
+        return $this->rideShareId;
     }
 
     public function completedAt(): CompletedAt
@@ -51,7 +51,7 @@ class DeliveryCompleted implements Serializable
     {
         return new self(
             UserId::fromString($data['userId']),
-            ActionId::fromString($data['deliveryId']),
+            ActionId::fromString($data['rideShareId']),
             CompletedAt::fromString($data['completedAt']),
             ActionBonusPoints::fromInt($data['actionBonusPoints'])
         );
@@ -61,7 +61,7 @@ class DeliveryCompleted implements Serializable
     {
         return [
             'userId' => $this->userId->toString(),
-            'deliveryId' => $this->deliveryId->toString(),
+            'rideShareId' => $this->rideShareId->toString(),
             'completedAt' => $this->completedAt->toString(),
             'actionBonusPoints' => $this->actionBonusPoints()->toInt()
         ];

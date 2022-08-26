@@ -2,7 +2,7 @@
 
 namespace App\Incentive\UI\Command;
 
-use App\Incentive\Domain\User\Command\DeliveryComplete;
+use App\Incentive\Domain\User\Command\RideShareComplete;
 use Broadway\CommandHandling\CommandBus;
 use Carbon\Carbon;
 use Ramsey\Uuid\Uuid;
@@ -13,10 +13,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
-    'incentives:delivery:complete',
-    'Complete a delivery'
+    'incentives:rideshare:complete',
+    'Complete a ride-share'
 )]
-class DeliveryCompleteCommand extends Command
+class RideShareCompleteCommand extends Command
 {
     private CommandBus $commandBus;
 
@@ -40,11 +40,11 @@ class DeliveryCompleteCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         //TODO user id should come from Repository - nextId method
-        $deliveryId = Uuid::uuid4();
+        $rideShareId = Uuid::uuid4();
 
         $inputData = $input->getArguments();
-        $inputData['deliveryId'] = $deliveryId->toString();
-        $this->commandBus->dispatch(DeliveryComplete::fromArray($inputData));
+        $inputData['rideShareId'] = $rideShareId->toString();
+        $this->commandBus->dispatch(RideShareComplete::fromArray($inputData));
 
         return Command::SUCCESS;
     }

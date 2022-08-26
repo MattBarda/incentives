@@ -6,19 +6,19 @@ use App\Incentive\Domain\User\ValueObject\CompletedAt;
 use App\Incentive\Domain\User\ValueObject\ActionId;
 use App\Incentive\Domain\User\ValueObject\UserId;
 
-class DeliveryComplete
+class RideShareComplete
 {
     private UserId $userId;
-    private ActionId $deliveryId;
+    private ActionId $rideShareId;
     private CompletedAt $completedAt;
 
     public function __construct(
         string $userId,
-        string $deliveryId,
+        string $rideShareId,
         string $completedAt
     ) {
         $this->userId = UserId::fromString($userId);
-        $this->deliveryId = ActionId::fromString($deliveryId);
+        $this->rideShareId = ActionId::fromString($rideShareId);
         $this->completedAt = CompletedAt::fromString($completedAt);
     }
 
@@ -26,7 +26,7 @@ class DeliveryComplete
     {
         return new self(
             $data['userId'],
-            $data['deliveryId'],
+            $data['rideShareId'],
             $data['completedAt']
         );
     }
@@ -36,9 +36,9 @@ class DeliveryComplete
         return $this->userId;
     }
 
-    public function deliveryId(): ActionId
+    public function rideShareId(): ActionId
     {
-        return $this->deliveryId;
+        return $this->rideShareId;
     }
 
     public function completedAt(): CompletedAt

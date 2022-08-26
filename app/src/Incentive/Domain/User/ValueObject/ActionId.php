@@ -6,7 +6,7 @@ use Assert\Assertion as Assert;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
-class DeliveryId
+class ActionId
 {
     private UuidInterface $uuid;
 

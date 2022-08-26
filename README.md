@@ -57,11 +57,17 @@ The general process Can be described in following steps:
 7. After much thinking I got the basic Event sourcing steps together and defined following commands:
    - registerUser
    - deliveryComplete
-   - rideshareComplete
+   - rideShareComplete
    - rentStart
    - rentEnd
    - DefineBooster
    - MoneyWithdrawn
 8. Then I created the basic folder structure for Event Sourcing
 9. After that I started Thinking about the Aggregate structure
+
+TODO's and Notes:
+ActionId instead of id VO per Action,
+Rename RegisterUser to UserRegister - better folder structure, or put handlers inside Command folder
+
+DDD vialotaion - extending domain classes with vendors
 
