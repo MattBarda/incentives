@@ -2,44 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7087eabf-551c-4472-bac8-cf2b5c554cd5" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/incentives.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/symfony2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/config/packages/broadway.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/config/packages/broadway_event_store_dbal.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/config/packages/doctrine.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/Common/Infrastructure/Cmd/CreateEventStoreCommand.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/Command/RegisterUser.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/CommandHandler/RegisterUserHandler.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/DomainEvent/UserWasRegistered.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/EventStore/UserStore.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/Exception/InvalidNameException.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/User.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/EmailAddress.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/UserId.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/UserName.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/Incentive/Infrastructure/Repository/EventStore/EventStoreUserRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/Incentive/UI/Command/UserCreateCommand.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/Command/RideShareComplete.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/CommandHandler/RideShareCompleteHandler.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/DomainEvent/RideShareCompleted.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/Incentive/UI/Command/RideShareCompleteCommand.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/.env" beforeDir="false" afterPath="$PROJECT_DIR$/app/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/app/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/bin/console" beforeDir="false" afterPath="$PROJECT_DIR$/app/bin/console" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/app/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/config/bundles.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/config/services.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/app/config/services.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/public/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/public/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/Incentive/Application/DTO/UserActionDTO.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/Incentive/Application/Service/UserActionUseCase.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/Incentive/UI/Command/UserActionCommand.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/Shared/Infrastructure/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/Common/Infrastructure/Kernel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/app/symfony.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/Incentive/Domain/User/Command/DeliveryComplete.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/Command/DeliveryComplete.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/Incentive/Domain/User/DomainEvent/DeliveryCompleted.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/DomainEvent/DeliveryCompleted.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/Incentive/Domain/User/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/DeliveryId.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/ActionId.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/Incentive/UI/Command/DeliveryCompleteCommand.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/Incentive/UI/Command/DeliveryCompleteCommand.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -158,7 +132,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/matt/Projects/4MeProjects/Examples/broadway-demo",
+    "last_opened_file_path": "/home/matt/Projects/4MeProjects/Recruting/incentives",
     "nodejs_package_manager_path": "npm",
     "php.override.implement.member.chooser.php.doc": "NONE",
     "settings.editor.selected.configurable": "Symfony2.SettingsForm",
@@ -188,11 +162,31 @@
       <workItem from="1661250557307" duration="4024000" />
       <workItem from="1661354581833" duration="18095000" />
       <workItem from="1661375005888" duration="7671000" />
-      <workItem from="1661419063966" duration="24058000" />
+      <workItem from="1661419063966" duration="38147000" />
+      <workItem from="1661504242474" duration="3084000" />
     </task>
+    <task id="LOCAL-00001" summary="Register User functionality.">
+      <created>1661451581831</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1661451581831</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Register User functionality.">
+      <created>1661451708877</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1661451708877</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Register User functionality." />
+    <option name="LAST_COMMIT_MESSAGE" value="Register User functionality." />
   </component>
 </project>
