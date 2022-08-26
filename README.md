@@ -10,6 +10,7 @@ As this is a recruitment task I have made certain assumptions, but normally I wo
     - When does the rideshare start and end?
 3. Can delivery and a rideshare be a part of one journey? - For simplicity I assumed not
     - if yes do multiple rideshares and deliveries combine?
+4. What happens if bonus points awarded for rent change during the rent duration?
    
 
 4. When does additional points for boosters start counting?
@@ -70,4 +71,6 @@ ActionId instead of id VO per Action,
 Rename RegisterUser to UserRegister - better folder structure, or put handlers inside Command folder
 
 DDD vialotaion - extending domain classes with vendors
+
+Naming the aggregate root entry points could be changed
 

@@ -2,7 +2,7 @@
 
 namespace App\Incentive\UI\Command;
 
-use App\Incentive\Domain\User\Command\DeliveryComplete;
+use App\Incentive\Domain\User\Command\RentStart;
 use Broadway\CommandHandling\CommandBus;
 use Carbon\Carbon;
 use Ramsey\Uuid\Uuid;
@@ -13,10 +13,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
-    'incentives:delivery:complete',
-    'Complete a delivery'
+    'incentives:rent:start',
+    'Start a rent'
 )]
-class DeliveryCompleteCommand extends Command
+class RentStartCommand extends Command
 {
     private CommandBus $commandBus;
 
@@ -30,9 +30,9 @@ class DeliveryCompleteCommand extends Command
     {
         $this->addArgument('userId', InputArgument::REQUIRED, 'User id');
         $this->addArgument(
-            'completedAt',
+            'startedAt',
             InputArgument::OPTIONAL,
-            'Delivery completed at',
+            'Rent started at',
             Carbon::create('now')->format('Y-m-d H:i:s')
         );
     }
@@ -40,11 +40,11 @@ class DeliveryCompleteCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         //TODO user id should come from Repository - nextId method
-        $deliveryId = Uuid::uuid4();
+        $rentId = Uuid::uuid4();
 
         $inputData = $input->getArguments();
-        $inputData['deliveryId'] = $deliveryId->toString();
-        $this->commandBus->dispatch(DeliveryComplete::fromArray($inputData));
+        $inputData['rentId'] = $rentId->toString();
+        $this->commandBus->dispatch(RentStart::fromArray($inputData));
 
         return Command::SUCCESS;
     }

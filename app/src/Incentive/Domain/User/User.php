@@ -3,12 +3,14 @@
 namespace App\Incentive\Domain\User;
 
 use App\Incentive\Domain\User\DomainEvent\DeliveryCompleted;
+use App\Incentive\Domain\User\DomainEvent\RentStarted;
 use App\Incentive\Domain\User\DomainEvent\RideShareCompleted;
 use App\Incentive\Domain\User\DomainEvent\UserWasRegistered;
 use App\Incentive\Domain\User\ValueObject\ActionBonusPoints;
 use App\Incentive\Domain\User\ValueObject\CompletedAt;
 use App\Incentive\Domain\User\ValueObject\ActionId;
 use App\Incentive\Domain\User\ValueObject\EmailAddress;
+use App\Incentive\Domain\User\ValueObject\StartedAt;
 use App\Incentive\Domain\User\ValueObject\UserBonusPoints;
 use App\Incentive\Domain\User\ValueObject\UserId;
 use App\Incentive\Domain\User\ValueObject\UserName;
@@ -22,6 +24,7 @@ class User extends EventSourcedAggregateRoot
     private UserBonusPoints $userBonusPoints;
     private array $completedDeliveries = [];
     private array $completedRideShares = [];
+    private array $rentsStarted = [];
 
     public function getAggregateRootId(): string
     {
@@ -103,5 +106,23 @@ class User extends EventSourcedAggregateRoot
         $this->userBonusPoints = UserBonusPoints::addActionBonusPoints(
             $this->userBonusPoints, $event->actionBonusPoints()
         );
+    }
+
+    public function rentStartWithData(
+        ActionId $rentId,
+        StartedAt $startedAd
+    ): void {
+        $this->apply(
+            new RentStarted(
+                $this->userId,
+                $rentId,
+                $startedAd
+            )
+        );
+    }
+
+    protected function applyRentStarted(RentStarted $event): void
+    {
+        $this->rentsStarted[$event->rentId()->toString()] = $event->startedAt();
     }
 }

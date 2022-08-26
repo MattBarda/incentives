@@ -37,6 +37,12 @@ services:
         tags:
             - { name: 'console.command' }
 
+    App\Incentive\UI\Command\RentStartCommand:
+        arguments:
+            $commandBus: '@broadway.command_handling.command_bus'
+        tags:
+            - { name: 'console.command' }
+
 
     App\Common\Infrastructure\Cmd\CreateEventStoreCommand:
         arguments:
@@ -70,5 +76,11 @@ services:
         arguments:
             $userRepository: '@App\Incentive\Infrastructure\Repository\EventStore\EventStoreUserRepository'
             $rideShareBonusPoints: 1
+        tags:
+            - { name: 'broadway.command_handler' }
+
+    App\Incentive\Domain\User\CommandHandler\RentStartHandler:
+        arguments:
+            $userRepository: '@App\Incentive\Infrastructure\Repository\EventStore\EventStoreUserRepository'
         tags:
             - { name: 'broadway.command_handler' }

@@ -47,7 +47,7 @@ class DeliveryCompleted implements Serializable
         return $this->actionBonusPoints;
     }
 
-    public static function deserialize(array $data)
+    public static function deserialize(array $data): self
     {
         return new self(
             UserId::fromString($data['userId']),
