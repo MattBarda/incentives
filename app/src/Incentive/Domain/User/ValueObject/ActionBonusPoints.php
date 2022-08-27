@@ -30,4 +30,8 @@ class ActionBonusPoints
         return $this->actionBonusPoints;
     }
 
+    public function multiplyBy(int $multiplier): self
+    {
+        return new self($this->actionBonusPoints * $multiplier);
+    }
 }

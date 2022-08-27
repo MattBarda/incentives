@@ -2,18 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7087eabf-551c-4472-bac8-cf2b5c554cd5" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/Command/RentStart.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/CommandHandler/RentStartHandler.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/DomainEvent/RentStarted.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/StartedAt.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/Incentive/UI/Command/RentStartCommand.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/Command/RentComplete.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/CommandHandler/RentCompleteHandler.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/DomainEvent/RentCompleted.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/RentDuration.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/Incentive/UI/Command/RentCompleteCommand.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/config/services.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/app/config/services.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/Incentive/Domain/User/DomainEvent/DeliveryCompleted.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/DomainEvent/DeliveryCompleted.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/Incentive/Domain/User/DomainEvent/RideShareCompleted.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/DomainEvent/RideShareCompleted.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/Incentive/Domain/User/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/Incentive/UI/Command/DeliveryCompleteCommand.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/Incentive/UI/Command/DeliveryCompleteCommand.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/ActionBonusPoints.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/ActionBonusPoints.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/CompletedAt.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/CompletedAt.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/StartedAt.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/StartedAt.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -164,7 +163,9 @@
       <workItem from="1661375005888" duration="7671000" />
       <workItem from="1661419063966" duration="38147000" />
       <workItem from="1661504242474" duration="4415000" />
-      <workItem from="1661514372565" duration="3376000" />
+      <workItem from="1661514372565" duration="7201000" />
+      <workItem from="1661524945094" duration="2973000" />
+      <workItem from="1661595362590" duration="6505000" />
     </task>
     <task id="LOCAL-00001" summary="Register User functionality.">
       <created>1661451581831</created>
@@ -194,7 +195,14 @@
       <option name="project" value="LOCAL" />
       <updated>1661507464536</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Complete Rent start functionality.">
+      <created>1661517803359</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1661517803359</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -203,6 +211,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Register User functionality." />
     <MESSAGE value="Complete RideShare functionality." />
-    <option name="LAST_COMMIT_MESSAGE" value="Complete RideShare functionality." />
+    <MESSAGE value="Complete Rent start functionality." />
+    <option name="LAST_COMMIT_MESSAGE" value="Complete Rent start functionality." />
   </component>
 </project>

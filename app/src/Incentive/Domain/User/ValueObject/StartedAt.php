@@ -34,4 +34,9 @@ class StartedAt
     {
         return $this->finishedAt->format(self::FORMAT);
     }
+
+    public function toCarbon(): Carbon
+    {
+        return $this->finishedAt;
+    }
 }
