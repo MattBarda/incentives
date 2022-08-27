@@ -16,9 +16,9 @@ class DeliveryCompleted implements Serializable
     private ActionBonusPoints $actionBonusPoints;
 
     public function __construct(
-        UserId            $userId,
-        ActionId          $deliveryId,
-        CompletedAt       $completedAt,
+        UserId $userId,
+        ActionId $deliveryId,
+        CompletedAt $completedAt,
         ActionBonusPoints $actionBonusPoints
     ) {
         $this->userId = $userId;

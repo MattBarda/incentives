@@ -2,17 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7087eabf-551c-4472-bac8-cf2b5c554cd5" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/Command/RentComplete.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/CommandHandler/RentCompleteHandler.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/DomainEvent/RentCompleted.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/RentDuration.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/Incentive/UI/Command/RentCompleteCommand.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/Command/BoosterActivate.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/CommandHandler/BoosterActivateHandler.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/DomainEvent/BoosterActivated.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/Booster.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/BoosterActionsRequired.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/BoosterApplicableForAction.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/BoosterAppliedAt.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/BoosterBonusPoints.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/BoosterBonusPointsValidFor.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/BoosterId.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/BoosterValidFrom.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/BoosterValidTo.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/Incentive/UI/Command/BoosterActivateCommand.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/config/services.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/app/config/services.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/Incentive/Domain/User/DomainEvent/DeliveryCompleted.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/DomainEvent/DeliveryCompleted.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/Incentive/Domain/User/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/ActionBonusPoints.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/ActionBonusPoints.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/CompletedAt.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/CompletedAt.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/StartedAt.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/StartedAt.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -165,7 +172,7 @@
       <workItem from="1661504242474" duration="4415000" />
       <workItem from="1661514372565" duration="7201000" />
       <workItem from="1661524945094" duration="2973000" />
-      <workItem from="1661595362590" duration="6505000" />
+      <workItem from="1661595362590" duration="22133000" />
     </task>
     <task id="LOCAL-00001" summary="Register User functionality.">
       <created>1661451581831</created>
@@ -202,7 +209,14 @@
       <option name="project" value="LOCAL" />
       <updated>1661517803359</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Rent functionality done.">
+      <created>1661602251546</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1661602251546</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -212,6 +226,7 @@
     <MESSAGE value="Register User functionality." />
     <MESSAGE value="Complete RideShare functionality." />
     <MESSAGE value="Complete Rent start functionality." />
-    <option name="LAST_COMMIT_MESSAGE" value="Complete Rent start functionality." />
+    <MESSAGE value="Rent functionality done." />
+    <option name="LAST_COMMIT_MESSAGE" value="Rent functionality done." />
   </component>
 </project>

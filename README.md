@@ -42,6 +42,8 @@ In order to install the project:
 3. ```ctrl+t```
 4. ```docker exec -it incentives-php8-container bash```
 5. ```composer install```
+6. ```bin/console doctrine:databse:create```
+7. ```broadway:event-store:create```
 
 ## Usage
 There are few Symfony commands that allow to interact with the Domain:
@@ -61,10 +63,11 @@ The general process Can be described in following steps:
    - rideShareComplete
    - rentStart
    - rentEnd
-   - DefineBooster
+   - boosterApply
    - MoneyWithdrawn
 8. Then I created the basic folder structure for Event Sourcing
 9. After that I started Thinking about the Aggregate structure
+10. And then I created one by one command, command handler, domain event and User aggregate methods to apply events adding Value objects as needed
 
 TODO's and Notes:
 ActionId instead of id VO per Action,
@@ -73,4 +76,6 @@ Rename RegisterUser to UserRegister - better folder structure, or put handlers i
 DDD vialotaion - extending domain classes with vendors
 
 Naming the aggregate root entry points could be changed
+
+boosterapplied suggests it was applied f
 

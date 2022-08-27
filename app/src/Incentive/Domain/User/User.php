@@ -2,12 +2,21 @@
 
 namespace App\Incentive\Domain\User;
 
+use App\Incentive\Domain\User\DomainEvent\BoosterActivated;
 use App\Incentive\Domain\User\DomainEvent\DeliveryCompleted;
 use App\Incentive\Domain\User\DomainEvent\RentCompleted;
 use App\Incentive\Domain\User\DomainEvent\RentStarted;
 use App\Incentive\Domain\User\DomainEvent\RideShareCompleted;
 use App\Incentive\Domain\User\DomainEvent\UserWasRegistered;
 use App\Incentive\Domain\User\ValueObject\ActionBonusPoints;
+use App\Incentive\Domain\User\ValueObject\Booster;
+use App\Incentive\Domain\User\ValueObject\BoosterActionsRequired;
+use App\Incentive\Domain\User\ValueObject\BoosterApplicableForAction;
+use App\Incentive\Domain\User\ValueObject\BoosterAppliedAt;
+use App\Incentive\Domain\User\ValueObject\BoosterBonusPoints;
+use App\Incentive\Domain\User\ValueObject\BoosterId;
+use App\Incentive\Domain\User\ValueObject\BoosterValidFrom;
+use App\Incentive\Domain\User\ValueObject\BoosterValidTo;
 use App\Incentive\Domain\User\ValueObject\CompletedAt;
 use App\Incentive\Domain\User\ValueObject\ActionId;
 use App\Incentive\Domain\User\ValueObject\EmailAddress;
@@ -28,6 +37,7 @@ class User extends EventSourcedAggregateRoot
     private array $completedRideShares = [];
     private array $rentsStarted = [];
     private array $rentsCompleted = [];
+    private array $activeBoosters = [];
 
     public function getAggregateRootId(): string
     {
@@ -165,5 +175,43 @@ class User extends EventSourcedAggregateRoot
         $this->userBonusPoints = UserBonusPoints::addActionBonusPoints(
             $this->userBonusPoints, $event->actionBonusPoints()->multiplyBy($rentDuration->fullDays())
         );
+    }
+
+    public function boosterActivateWithData(
+        UserId $userId,
+        BoosterId $boosterId,
+        BoosterAppliedAt $appliedAt,
+        BoosterValidFrom $validFrom,
+        BoosterValidTo $validTo,
+        BoosterApplicableForAction $applicableForAction,
+        BoosterBonusPoints $boosterBonusPoints,
+        BoosterActionsRequired $boosterActionsRequired
+    ): void {
+        $this->apply(
+            new BoosterActivated(
+                $userId,
+                $boosterId,
+                $appliedAt,
+                $validFrom,
+                $validTo,
+                $applicableForAction,
+                $boosterBonusPoints,
+                $boosterActionsRequired
+            )
+        );
+    }
+
+    public function applyBoosterActivated(BoosterActivated $event)
+    {
+        $this->activeBoosters[$event->applicableForAction()->toString()] = [
+            Booster::fromValueObjects(
+                $event->appliedAt(),
+                $event->validFrom(),
+                $event->validTo(),
+                $event->applicableForAction(),
+                $event->boosterBonusPoints(),
+                $event->boosterActionsRequired()
+            )
+        ];
     }
 }
