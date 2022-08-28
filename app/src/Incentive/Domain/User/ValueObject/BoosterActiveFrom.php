@@ -11,11 +11,6 @@ class BoosterActiveFrom
 
     private Carbon $validFrom;
 
-    public static function now(): self
-    {
-        return new self(Carbon::create('now'));
-    }
-
     public static function fromString(string $validFrom): self
     {
         //TODO do better validation

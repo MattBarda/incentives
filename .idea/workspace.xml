@@ -2,17 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7087eabf-551c-4472-bac8-cf2b5c554cd5" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/Exception/BoosterRangeException.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/BoosterActiveRange.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/ExpirationDate.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/ExpiringUserBonusPoints.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/Incentive/Domain/User/Command/BoosterActivate.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/Command/BoosterActivate.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/Incentive/Domain/User/CommandHandler/BoosterActivateHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/CommandHandler/BoosterActivateHandler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/Incentive/Domain/User/DomainEvent/BoosterActivated.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/DomainEvent/BoosterActivated.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/Incentive/Domain/User/CommandHandler/DeliveryCompleteHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/CommandHandler/DeliveryCompleteHandler.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/Incentive/Domain/User/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/User.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/Booster.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/Booster.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/BoosterValidFrom.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/BoosterActiveFrom.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/BoosterValidTo.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/BoosterActiveTo.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/BoosterActiveFrom.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/BoosterActiveFrom.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/BoosterActiveRange.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/BoosterActiveRange.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/BoosterActiveTo.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/BoosterActiveTo.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/BoosterAppliedAt.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/BoosterAppliedAt.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/CompletedAt.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/CompletedAt.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/StartedAt.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/StartedAt.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/UserBonusPoints.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/Incentive/Domain/User/ValueObject/UserBonusPoints.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -166,7 +168,7 @@
       <workItem from="1661514372565" duration="7201000" />
       <workItem from="1661524945094" duration="2973000" />
       <workItem from="1661595362590" duration="23028000" />
-      <workItem from="1661694851195" duration="6732000" />
+      <workItem from="1661694851195" duration="13846000" />
     </task>
     <task id="LOCAL-00001" summary="Register User functionality.">
       <created>1661451581831</created>
@@ -217,7 +219,14 @@
       <option name="project" value="LOCAL" />
       <updated>1661621553240</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Validate booster active range.">
+      <created>1661704928410</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1661704928410</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -229,6 +238,7 @@
     <MESSAGE value="Complete Rent start functionality." />
     <MESSAGE value="Rent functionality done." />
     <MESSAGE value="Booster apply functionality done." />
-    <option name="LAST_COMMIT_MESSAGE" value="Booster apply functionality done." />
+    <MESSAGE value="Validate booster active range." />
+    <option name="LAST_COMMIT_MESSAGE" value="Validate booster active range." />
   </component>
 </project>

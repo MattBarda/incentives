@@ -39,4 +39,19 @@ class Booster
             $boosterActionsRequired
         );
     }
+
+    public function activeRange(): BoosterActiveRange
+    {
+        return $this->activeRange;
+    }
+
+    public function boosterActionsRequired(): BoosterActionsRequired
+    {
+        return $this->boosterActionsRequired;
+    }
+
+    public function boosterBonusPoints(): BoosterBonusPoints
+    {
+        return $this->boosterBonusPoints;
+    }
 }

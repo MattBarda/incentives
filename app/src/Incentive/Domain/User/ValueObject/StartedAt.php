@@ -9,34 +9,29 @@ class StartedAt
 {
     const FORMAT = 'Y-m-d H:i:s';
 
-    private Carbon $finishedAt;
+    private Carbon $startedAt;
 
-    public static function now(): self
-    {
-        return new self(Carbon::create('now'));
-    }
-
-    public static function fromString(string $finishedAt): self
+    public static function fromString(string $startedAt): self
     {
         //TODO do better validation
-        if (!Carbon::hasFormat($finishedAt, self::FORMAT)) {
-            throw new InvalidDateFormatException($finishedAt, self::FORMAT);
+        if (!Carbon::hasFormat($startedAt, self::FORMAT)) {
+            throw new InvalidDateFormatException($startedAt, self::FORMAT);
         }
-        return new self(Carbon::create($finishedAt));
+        return new self(Carbon::create($startedAt));
     }
 
-    private function __construct(Carbon $finishedAt)
+    private function __construct(Carbon $startedAt)
     {
-        $this->finishedAt = $finishedAt;
+        $this->startedAt = $startedAt;
     }
 
     public function toString(): string
     {
-        return $this->finishedAt->format(self::FORMAT);
+        return $this->startedAt->format(self::FORMAT);
     }
 
     public function toCarbon(): Carbon
     {
-        return $this->finishedAt;
+        return $this->startedAt;
     }
 }

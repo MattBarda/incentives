@@ -3,7 +3,6 @@
 namespace App\Incentive\Domain\User\ValueObject;
 
 use App\Incentive\Domain\User\Exception\BoosterRangeException;
-use Carbon\Carbon;
 use DateInterval;
 
 class BoosterActiveRange
@@ -16,14 +15,16 @@ class BoosterActiveRange
         BoosterActiveFrom $boosterActiveFrom,
         BoosterActiveTo $boosterActiveTo
     ) {
-        if ($boosterActiveFrom->toCarbon()->greaterThan($boosterActiveTo->toCarbon())) {
+        if ($boosterActiveFrom->toCarbon()->isAfter($boosterActiveTo->toCarbon())) {
             throw new BoosterRangeException(
-                'Trying to activate booster where Booster activeFrom is before activeTo'
+                'Booster activeFrom is after activeTo'
             );
         }
-        if ($boosterActiveFrom->toCarbon()->lessThan(Carbon::now())) {
-            throw new BoosterRangeException('Trying to Activate booster in the past.');
-        }
+        //TODO figure out where to put this check as it breaks when reconstituteFromEventStream happens,
+        // unless we want to activate boosters applicable for past actions
+//        if ($boosterActiveFrom->toCarbon()->isBefore(Carbon::now())) {
+//            throw new BoosterRangeException('Booster can not start in the past');
+//        }
         $this->boosterActiveFrom = $boosterActiveFrom;
         $this->boosterActiveTo = $boosterActiveTo;
         $this->boosterDuration = $boosterActiveFrom->toCarbon()->diff($boosterActiveTo->toCarbon());

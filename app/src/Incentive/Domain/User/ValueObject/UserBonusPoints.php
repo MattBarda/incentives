@@ -14,6 +14,11 @@ class UserBonusPoints
         return new self($userBonusPoints);
     }
 
+    public static function fromBoosterBonusPoints(BoosterBonusPoints $boosterBonusPoints): self
+    {
+        return new self($boosterBonusPoints->pointsAsInt());
+    }
+
     private function __construct(int $userBonusPoints)
     {
         try {

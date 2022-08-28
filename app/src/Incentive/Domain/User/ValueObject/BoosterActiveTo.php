@@ -9,34 +9,29 @@ class BoosterActiveTo
 {
     const FORMAT = 'Y-m-d H:i:s';
 
-    private Carbon $validTo;
+    private Carbon $activeTo;
 
-    public static function now(): self
-    {
-        return new self(Carbon::create('now'));
-    }
-
-    public static function fromString(string $validTo): self
+    public static function fromString(string $activeTo): self
     {
         //TODO do better validation
-        if (!Carbon::hasFormat($validTo, self::FORMAT)) {
-            throw new InvalidDateFormatException($validTo, self::FORMAT);
+        if (!Carbon::hasFormat($activeTo, self::FORMAT)) {
+            throw new InvalidDateFormatException($activeTo, self::FORMAT);
         }
-        return new self(Carbon::create($validTo));
+        return new self(Carbon::create($activeTo));
     }
 
-    private function __construct(Carbon $validTo)
+    private function __construct(Carbon $activeTo)
     {
-        $this->validTo = $validTo;
+        $this->activeTo = $activeTo;
     }
 
     public function toString(): string
     {
-        return $this->validTo->format(self::FORMAT);
+        return $this->activeTo->format(self::FORMAT);
     }
 
     public function toCarbon(): Carbon
     {
-        return $this->validTo;
+        return $this->activeTo;
     }
 }

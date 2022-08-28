@@ -19,6 +19,8 @@ use App\Incentive\Domain\User\ValueObject\BoosterId;
 use App\Incentive\Domain\User\ValueObject\CompletedAt;
 use App\Incentive\Domain\User\ValueObject\ActionId;
 use App\Incentive\Domain\User\ValueObject\EmailAddress;
+use App\Incentive\Domain\User\ValueObject\ExpirationDate;
+use App\Incentive\Domain\User\ValueObject\ExpiringUserBonusPoints;
 use App\Incentive\Domain\User\ValueObject\RentDuration;
 use App\Incentive\Domain\User\ValueObject\StartedAt;
 use App\Incentive\Domain\User\ValueObject\UserBonusPoints;
@@ -39,6 +41,7 @@ class User extends EventSourcedAggregateRoot
     private array $rentsStarted = [];
     private array $rentsCompleted = [];
     private array $activeBoosters = [];
+    private array $expiringBonusPints = [];
 
     public function getAggregateRootId(): string
     {
@@ -93,9 +96,31 @@ class User extends EventSourcedAggregateRoot
     {
         $this->completedDeliveries[$event->deliveryId()->toString()] = $event->completedAt();
 
-//        $isBoosterActive = array_key_exists('delivery', $this->activeBoosters);
-//
-//        if (array_key_exists('delivery', $this->activeBoosters) && $this->activeBoosters['delivery']->)
+        $isBoosterActive = array_key_exists('delivery', $this->activeBoosters);
+        if ($isBoosterActive) {
+
+            /** @var Booster $activeBooster */
+            $activeBooster = $this->activeBoosters['delivery'][0];
+
+            $isDeliveryInBoosterRange = $event->completedAt()->toCarbon()->between(
+                $activeBooster->activeRange()->boosterActiveFrom()->toCarbon(),
+                $activeBooster->activeRange()->boosterActiveTo()->toCarbon()
+            );
+
+            if ($isDeliveryInBoosterRange) {
+                $this->deliveriesApplicableForBooster[$event->deliveryId()->toString()] = null;
+
+                if (count($this->deliveriesApplicableForBooster) === $activeBooster->boosterActionsRequired()->toInt()) {
+                    $this->expiringBonusPints[] = ExpiringUserBonusPoints::fromUserBonusPointsAndExpirationDate(
+                        UserBonusPoints::fromBoosterBonusPoints($activeBooster->boosterBonusPoints()),
+                        ExpirationDate::fromBoosterBonusPoints($activeBooster->boosterBonusPoints())
+                    );
+                    $this->deliveriesApplicableForBooster = [];
+                }
+            } else {
+                $this->deliveriesApplicableForBooster = [];
+            }
+        }
 
         $this->userBonusPoints = UserBonusPoints::addActionBonusPoints(
             $this->userBonusPoints, $event->actionBonusPoints()

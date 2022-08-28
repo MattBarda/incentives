@@ -11,11 +11,6 @@ class BoosterAppliedAt
 
     private Carbon $appliedAt;
 
-    public static function now(): self
-    {
-        return new self(Carbon::create('now'));
-    }
-
     public static function fromString(string $appliedAt): self
     {
         //TODO do better validation
