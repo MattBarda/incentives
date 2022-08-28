@@ -11,12 +11,11 @@ use App\Incentive\Domain\User\DomainEvent\UserWasRegistered;
 use App\Incentive\Domain\User\ValueObject\ActionBonusPoints;
 use App\Incentive\Domain\User\ValueObject\Booster;
 use App\Incentive\Domain\User\ValueObject\BoosterActionsRequired;
+use App\Incentive\Domain\User\ValueObject\BoosterActiveRange;
 use App\Incentive\Domain\User\ValueObject\BoosterApplicableForAction;
 use App\Incentive\Domain\User\ValueObject\BoosterAppliedAt;
 use App\Incentive\Domain\User\ValueObject\BoosterBonusPoints;
 use App\Incentive\Domain\User\ValueObject\BoosterId;
-use App\Incentive\Domain\User\ValueObject\BoosterValidFrom;
-use App\Incentive\Domain\User\ValueObject\BoosterValidTo;
 use App\Incentive\Domain\User\ValueObject\CompletedAt;
 use App\Incentive\Domain\User\ValueObject\ActionId;
 use App\Incentive\Domain\User\ValueObject\EmailAddress;
@@ -34,7 +33,9 @@ class User extends EventSourcedAggregateRoot
     private EmailAddress $emailAddress;
     private UserBonusPoints $userBonusPoints;
     private array $completedDeliveries = [];
+    private array $deliveriesApplicableForBooster = [];
     private array $completedRideShares = [];
+    private array $rideSharesApplicableForBooster = [];
     private array $rentsStarted = [];
     private array $rentsCompleted = [];
     private array $activeBoosters = [];
@@ -91,6 +92,10 @@ class User extends EventSourcedAggregateRoot
     protected function applyDeliveryCompleted(DeliveryCompleted $event): void
     {
         $this->completedDeliveries[$event->deliveryId()->toString()] = $event->completedAt();
+
+//        $isBoosterActive = array_key_exists('delivery', $this->activeBoosters);
+//
+//        if (array_key_exists('delivery', $this->activeBoosters) && $this->activeBoosters['delivery']->)
 
         $this->userBonusPoints = UserBonusPoints::addActionBonusPoints(
             $this->userBonusPoints, $event->actionBonusPoints()
@@ -181,8 +186,7 @@ class User extends EventSourcedAggregateRoot
         UserId $userId,
         BoosterId $boosterId,
         BoosterAppliedAt $appliedAt,
-        BoosterValidFrom $validFrom,
-        BoosterValidTo $validTo,
+        BoosterActiveRange $activeRange,
         BoosterApplicableForAction $applicableForAction,
         BoosterBonusPoints $boosterBonusPoints,
         BoosterActionsRequired $boosterActionsRequired
@@ -192,8 +196,7 @@ class User extends EventSourcedAggregateRoot
                 $userId,
                 $boosterId,
                 $appliedAt,
-                $validFrom,
-                $validTo,
+                $activeRange,
                 $applicableForAction,
                 $boosterBonusPoints,
                 $boosterActionsRequired
@@ -206,8 +209,7 @@ class User extends EventSourcedAggregateRoot
         $this->activeBoosters[$event->applicableForAction()->toString()] = [
             Booster::fromValueObjects(
                 $event->appliedAt(),
-                $event->validFrom(),
-                $event->validTo(),
+                $event->activeRange(),
                 $event->applicableForAction(),
                 $event->boosterBonusPoints(),
                 $event->boosterActionsRequired()

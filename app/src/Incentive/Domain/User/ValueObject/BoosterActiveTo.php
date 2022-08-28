@@ -5,7 +5,7 @@ namespace App\Incentive\Domain\User\ValueObject;
 use App\Incentive\Domain\User\Exception\InvalidDateFormatException;
 use Carbon\Carbon;
 
-class BoosterValidTo
+class BoosterActiveTo
 {
     const FORMAT = 'Y-m-d H:i:s';
 

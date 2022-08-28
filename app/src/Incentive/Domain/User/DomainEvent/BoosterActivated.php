@@ -3,13 +3,14 @@
 namespace App\Incentive\Domain\User\DomainEvent;
 
 use App\Incentive\Domain\User\ValueObject\BoosterActionsRequired;
+use App\Incentive\Domain\User\ValueObject\BoosterActiveRange;
 use App\Incentive\Domain\User\ValueObject\BoosterApplicableForAction;
 use App\Incentive\Domain\User\ValueObject\BoosterAppliedAt;
 use App\Incentive\Domain\User\ValueObject\BoosterBonusPoints;
 use App\Incentive\Domain\User\ValueObject\BoosterBonusPointsValidFor;
 use App\Incentive\Domain\User\ValueObject\BoosterId;
-use App\Incentive\Domain\User\ValueObject\BoosterValidFrom;
-use App\Incentive\Domain\User\ValueObject\BoosterValidTo;
+use App\Incentive\Domain\User\ValueObject\BoosterActiveFrom;
+use App\Incentive\Domain\User\ValueObject\BoosterActiveTo;
 use App\Incentive\Domain\User\ValueObject\UserId;
 use Broadway\Serializer\Serializable;
 
@@ -18,8 +19,7 @@ class BoosterActivated implements Serializable
     private UserId $userId;
     private BoosterId $boosterId;
     private BoosterAppliedAt $appliedAt;
-    private BoosterValidFrom $validFrom;
-    private BoosterValidTo $validTo;
+    private BoosterActiveRange $activeRange;
     private BoosterApplicableForAction $applicableForAction;
     private BoosterBonusPoints $boosterBonusPoints;
     private BoosterActionsRequired $boosterActionsRequired;
@@ -28,8 +28,7 @@ class BoosterActivated implements Serializable
         UserId $userId,
         BoosterId $boosterId,
         BoosterAppliedAt $appliedAt,
-        BoosterValidFrom $validFrom,
-        BoosterValidTo $validTo,
+        BoosterActiveRange $activeRange,
         BoosterApplicableForAction $applicableForAction,
         BoosterBonusPoints $boosterBonusPoints,
         BoosterActionsRequired $boosterActionsRequired
@@ -37,8 +36,7 @@ class BoosterActivated implements Serializable
         $this->userId = $userId;
         $this->boosterId = $boosterId;
         $this->appliedAt = $appliedAt;
-        $this->validFrom = $validFrom;
-        $this->validTo = $validTo;
+        $this->activeRange = $activeRange;
         $this->applicableForAction = $applicableForAction;
         $this->boosterBonusPoints = $boosterBonusPoints;
         $this->boosterActionsRequired = $boosterActionsRequired;
@@ -59,14 +57,9 @@ class BoosterActivated implements Serializable
         return $this->appliedAt;
     }
 
-    public function validFrom(): BoosterValidFrom
+    public function activeRange(): BoosterActiveRange
     {
-        return $this->validFrom;
-    }
-
-    public function validTo(): BoosterValidTo
-    {
-        return $this->validTo;
+        return $this->activeRange;
     }
 
     public function applicableForAction(): BoosterApplicableForAction
@@ -90,8 +83,10 @@ class BoosterActivated implements Serializable
             UserId::fromString($data['userId']),
             BoosterId::fromString($data['boosterId']),
             BoosterAppliedAt::fromString($data['appliedAt']),
-            BoosterValidFrom::fromString($data['validFrom']),
-            BoosterValidTo::fromString($data['validTo']),
+            BoosterActiveRange::fromActiveFromAndActiveTo(
+                BoosterActiveFrom::fromString($data['activeFrom']),
+                BoosterActiveTo::fromString($data['activeTo'])
+            ),
             BoosterApplicableForAction::fromString($data['applicableForAction']),
             BoosterBonusPoints::fromIntAndExpireAt(
                 $data['boosterBonusPoints'],
@@ -107,12 +102,12 @@ class BoosterActivated implements Serializable
             'userId' => $this->userId->toString(),
             'boosterId' => $this->userId->toString(),
             'appliedAt' => $this->appliedAt()->toString(),
-            'validFrom' => $this->validFrom()->toString(),
-            'validTo' => $this->validTo()->toString(),
+            'activeFrom' => $this->activeRange()->boosterActiveFrom()->toString(),
+            'activeTo' => $this->activeRange->boosterActiveTo()->toString(),
             'applicableForAction' => $this->applicableForAction()->toString(),
             'boosterBonusPoints' => $this->boosterBonusPoints()->pointsAsInt(),
             'boosterBonusPointsValidForDays' => $this->boosterBonusPoints()->boosterBonusPointsValidFor()->toInt(),
-            'boosterActionsRequired' => $this->boosterBonusPoints()->pointsAsInt()
+            'boosterActionsRequired' => $this->boosterActionsRequired()->toInt()
         ];
     }
 }

@@ -5,23 +5,20 @@ namespace App\Incentive\Domain\User\ValueObject;
 class Booster
 {
     private BoosterAppliedAt $appliedAt;
-    private BoosterValidFrom $validFrom;
-    private BoosterValidTo $validTo;
+    private BoosterActiveRange $activeRange;
     private BoosterApplicableForAction $applicableForAction;
     private BoosterBonusPoints $boosterBonusPoints;
     private BoosterActionsRequired $boosterActionsRequired;
 
     private function __construct(
         BoosterAppliedAt $appliedAt,
-        BoosterValidFrom $validFrom,
-        BoosterValidTo $validTo,
+        BoosterActiveRange $activeRange,
         BoosterApplicableForAction $applicableForAction,
         BoosterBonusPoints $boosterBonusPoints,
         BoosterActionsRequired $boosterActionsRequired
     ) {
         $this->appliedAt = $appliedAt;
-        $this->validFrom = $validFrom;
-        $this->validTo = $validTo;
+        $this->activeRange = $activeRange;
         $this->applicableForAction = $applicableForAction;
         $this->boosterBonusPoints = $boosterBonusPoints;
         $this->boosterActionsRequired = $boosterActionsRequired;
@@ -29,16 +26,14 @@ class Booster
 
     public static function fromValueObjects(
         BoosterAppliedAt $appliedAt,
-        BoosterValidFrom $validFrom,
-        BoosterValidTo $validTo,
+        BoosterActiveRange $activeRange,
         BoosterApplicableForAction $applicableForAction,
         BoosterBonusPoints $boosterBonusPoints,
         BoosterActionsRequired $boosterActionsRequired
     ): self {
         return new self(
             $appliedAt,
-            $validFrom,
-            $validTo,
+            $activeRange,
             $applicableForAction,
             $boosterBonusPoints,
             $boosterActionsRequired

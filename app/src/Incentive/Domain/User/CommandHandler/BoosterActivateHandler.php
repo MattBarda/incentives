@@ -24,8 +24,7 @@ class BoosterActivateHandler extends SimpleCommandHandler
             $command->userId(),
             $command->boosterId(),
             $command->appliedAt(),
-            $command->validFrom(),
-            $command->validTo(),
+            $command->activeRange(),
             $command->applicableForAction(),
             $command->boosterBonusPoints(),
             $command->getBoosterActionsRequired()

@@ -3,13 +3,14 @@
 namespace App\Incentive\Domain\User\Command;
 
 use App\Incentive\Domain\User\ValueObject\BoosterActionsRequired;
+use App\Incentive\Domain\User\ValueObject\BoosterActiveRange;
 use App\Incentive\Domain\User\ValueObject\BoosterApplicableForAction;
 use App\Incentive\Domain\User\ValueObject\BoosterAppliedAt;
 use App\Incentive\Domain\User\ValueObject\BoosterBonusPoints;
 use App\Incentive\Domain\User\ValueObject\BoosterBonusPointsValidFor;
 use App\Incentive\Domain\User\ValueObject\BoosterId;
-use App\Incentive\Domain\User\ValueObject\BoosterValidFrom;
-use App\Incentive\Domain\User\ValueObject\BoosterValidTo;
+use App\Incentive\Domain\User\ValueObject\BoosterActiveFrom;
+use App\Incentive\Domain\User\ValueObject\BoosterActiveTo;
 use App\Incentive\Domain\User\ValueObject\UserId;
 
 class BoosterActivate
@@ -17,8 +18,7 @@ class BoosterActivate
     private UserId $userId;
     private BoosterId $boosterId;
     private BoosterAppliedAt $appliedAt;
-    private BoosterValidFrom $validFrom;
-    private BoosterValidTo $validTo;
+    private BoosterActiveRange $activeRange;
     private BoosterApplicableForAction $applicableForAction;
     private BoosterBonusPoints $boosterBonusPoints;
     private BoosterActionsRequired $boosterActionsRequired;
@@ -37,8 +37,10 @@ class BoosterActivate
         $this->userId = UserId::fromString($userId);
         $this->boosterId = BoosterId::fromString($boosterId);
         $this->appliedAt = BoosterAppliedAt::fromString($appliedAt);
-        $this->validFrom = BoosterValidFrom::fromString($validFrom);
-        $this->validTo = BoosterValidTo::fromString($validTo);
+        $this->activeRange = BoosterActiveRange::fromActiveFromAndActiveTo(
+            BoosterActiveFrom::fromString($validFrom),
+            BoosterActiveTo::fromString($validTo)
+        );
         $this->applicableForAction = BoosterApplicableForAction::fromString($applicableForAction);
         $this->boosterBonusPoints = BoosterBonusPoints::fromIntAndExpireAt(
             $boosterBonusPoints,
@@ -77,14 +79,9 @@ class BoosterActivate
         return $this->appliedAt;
     }
 
-    public function validFrom(): BoosterValidFrom
+    public function activeRange(): BoosterActiveRange
     {
-        return $this->validFrom;
-    }
-
-    public function validTo(): BoosterValidTo
-    {
-        return $this->validTo;
+        return $this->activeRange;
     }
 
     public function applicableForAction(): BoosterApplicableForAction

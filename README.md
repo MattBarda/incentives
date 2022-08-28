@@ -21,7 +21,10 @@ As this is a recruitment task I have made certain assumptions, but normally I wo
     - at the time booster stopped being active?
 6. Will it be possible to combine multiple booster actions together in the future?
 7. Are we going to need booster points history/list?
-8. Are the boosters alway active during the same time for each day or are they more dynamic>
+8. Are the boosters always active during the same time for each day or are they more dynamic>
+9. What happens if booster ranges overlap (1 activated and another one activated after first one)
+10. Can a booster have active date range in the past? - I assumend not
+11. Can there be multiple boosters active at the same time (for different time ranges)? - I assumed not there is ony one active range at the same time
 8. Do we need to pay tax on bonus points?
 
 #### additional questions:
