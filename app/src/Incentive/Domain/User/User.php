@@ -3,6 +3,7 @@
 namespace App\Incentive\Domain\User;
 
 use App\Incentive\Domain\User\DomainEvent\BoosterActivated;
+use App\Incentive\Domain\User\DomainEvent\BoosterApplied;
 use App\Incentive\Domain\User\DomainEvent\DeliveryCompleted;
 use App\Incentive\Domain\User\DomainEvent\RentCompleted;
 use App\Incentive\Domain\User\DomainEvent\RentStarted;
@@ -90,11 +91,44 @@ class User extends EventSourcedAggregateRoot
                 $actionBonusPoints
             )
         );
+
+        $isBoosterActive = array_key_exists('delivery', $this->activeBoosters);
+        if ($isBoosterActive) {
+
+            /** @var Booster $activeBooster */
+            $activeBooster = $this->activeBoosters['delivery'][0];
+
+            $isDeliveryInBoosterRange = $completedAt->toCarbon()->between(
+                $activeBooster->activeRange()->boosterActiveFrom()->toCarbon(),
+                $activeBooster->activeRange()->boosterActiveTo()->toCarbon()
+            );
+
+            if ($isDeliveryInBoosterRange) {
+                if (count($this->deliveriesApplicableForBooster) === $activeBooster->boosterActionsRequired()->toInt()) {
+
+                    $this->apply(
+                        new BoosterApplied(
+                            $this->userId,
+                            ExpiringUserBonusPoints::fromUserBonusPointsAndExpirationDate(
+                                UserBonusPoints::fromBoosterBonusPoints($activeBooster->boosterBonusPoints()),
+                                ExpirationDate::fromBoosterBonusPoints($activeBooster->boosterBonusPoints()),
+                            ),
+                            $activeBooster->applicableForAction()
+                        )
+                    );
+
+                }
+            }
+        }
     }
 
     protected function applyDeliveryCompleted(DeliveryCompleted $event): void
     {
         $this->completedDeliveries[$event->deliveryId()->toString()] = $event->completedAt();
+
+        $this->userBonusPoints = UserBonusPoints::addActionBonusPoints(
+            $this->userBonusPoints, $event->actionBonusPoints()
+        );
 
         $isBoosterActive = array_key_exists('delivery', $this->activeBoosters);
         if ($isBoosterActive) {
@@ -108,38 +142,63 @@ class User extends EventSourcedAggregateRoot
             );
 
             if ($isDeliveryInBoosterRange) {
-                $this->deliveriesApplicableForBooster[$event->deliveryId()->toString()] = null;
+                $this->deliveriesApplicableForBooster[$event->deliveryId()->toString()] = $event->deliveryId()->toString();
 
-                if (count($this->deliveriesApplicableForBooster) === $activeBooster->boosterActionsRequired()->toInt()) {
-                    $this->expiringBonusPints[] = ExpiringUserBonusPoints::fromUserBonusPointsAndExpirationDate(
-                        UserBonusPoints::fromBoosterBonusPoints($activeBooster->boosterBonusPoints()),
-                        ExpirationDate::fromBoosterBonusPoints($activeBooster->boosterBonusPoints())
-                    );
-                    $this->deliveriesApplicableForBooster = [];
-                }
             } else {
                 $this->deliveriesApplicableForBooster = [];
             }
         }
+    }
 
-        $this->userBonusPoints = UserBonusPoints::addActionBonusPoints(
-            $this->userBonusPoints, $event->actionBonusPoints()
-        );
+    protected function applyBoosterApplied(BoosterApplied $event)
+    {
+        $this->expiringBonusPints[] = $event->expiringUserBonusPoints();
+        $this->deliveriesApplicableForBooster = [];
+        $this->rideSharesApplicableForBooster = [];
     }
 
     public function completeRideShareWithData(
-        ActionId          $deliveryId,
-        CompletedAt       $completedAt,
+        ActionId $rideShareId,
+        CompletedAt $completedAt,
         ActionBonusPoints $actionBonusPoints
     ): void {
         $this->apply(
             new RideShareCompleted(
                 $this->userId,
-                $deliveryId,
+                $rideShareId,
                 $completedAt,
                 $actionBonusPoints
             )
         );
+
+        $isBoosterActive = array_key_exists('rideShare', $this->activeBoosters);
+        if ($isBoosterActive) {
+
+            /** @var Booster $activeBooster */
+            $activeBooster = $this->activeBoosters['rideShare'][0];
+
+            $isRideShareInBoosterRange = $completedAt->toCarbon()->between(
+                $activeBooster->activeRange()->boosterActiveFrom()->toCarbon(),
+                $activeBooster->activeRange()->boosterActiveTo()->toCarbon()
+            );
+
+            if ($isRideShareInBoosterRange) {
+                if (count($this->rideSharesApplicableForBooster) === $activeBooster->boosterActionsRequired()->toInt()) {
+
+                    $this->apply(
+                        new BoosterApplied(
+                            $this->userId,
+                            ExpiringUserBonusPoints::fromUserBonusPointsAndExpirationDate(
+                                UserBonusPoints::fromBoosterBonusPoints($activeBooster->boosterBonusPoints()),
+                                ExpirationDate::fromBoosterBonusPoints($activeBooster->boosterBonusPoints()),
+                            ),
+                            $activeBooster->applicableForAction()
+                        )
+                    );
+
+                }
+            }
+        }
     }
 
     protected function applyRideShareCompleted(RideShareCompleted $event): void
@@ -149,6 +208,25 @@ class User extends EventSourcedAggregateRoot
         $this->userBonusPoints = UserBonusPoints::addActionBonusPoints(
             $this->userBonusPoints, $event->actionBonusPoints()
         );
+
+        $isBoosterActive = array_key_exists('rideShare', $this->activeBoosters);
+        if ($isBoosterActive) {
+
+            /** @var Booster $activeBooster */
+            $activeBooster = $this->activeBoosters['rideShare'][0];
+
+            $isRideShareInBoosterRange = $event->completedAt()->toCarbon()->between(
+                $activeBooster->activeRange()->boosterActiveFrom()->toCarbon(),
+                $activeBooster->activeRange()->boosterActiveTo()->toCarbon()
+            );
+
+            if ($isRideShareInBoosterRange) {
+                $this->rideSharesApplicableForBooster[$event->rideShareId()->toString()] = $event->rideShareId()->toString();
+
+            } else {
+                $this->rideSharesApplicableForBooster = [];
+            }
+        }
     }
 
     public function rentStartWithData(
@@ -174,37 +252,40 @@ class User extends EventSourcedAggregateRoot
         CompletedAt $completedAt,
         ActionBonusPoints $actionBonusPointsPerDay
     ): void {
+        if (!array_key_exists($rentId->toString(), $this->rentsStarted)) {
+            //TODO You could emit domain event here instead
+            throw new \RuntimeException(sprintf(
+                "Trying to complete rent with id: %s that was not started",
+                $rentId->toString()
+            ));
+        }
+        $rentDuration = RentDuration::fromStartedAtAndCompletedAt(
+            $this->rentsStarted[$rentId->toString()], $completedAt
+        );
+        $actionBonusPoints = $actionBonusPointsPerDay->multiplyBy($rentDuration->fullDays());
+
         $this->apply(
             new RentCompleted(
                 $this->userId,
                 $rentId,
-                $completedAt,
-                $actionBonusPointsPerDay
+                $actionBonusPointsPerDay,
+                $rentDuration,
+                $actionBonusPoints
             )
         );
+
     }
 
     protected function applyRentCompleted(RentCompleted $event): void
     {
-        $rentId = $event->rentId()->toString();
-        if (!array_key_exists($rentId, $this->rentsStarted)) {
-            //TODO You could emit domain event here instead
-            throw new \RuntimeException(sprintf(
-                "Trying to complete rent with id: %s that was not started",
-                $event->rentId()->toString()
-            ));
-        }
-
-        $rentDuration = RentDuration::fromStartedAtAndCompletedAt(
-            $this->rentsStarted[$rentId], $event->completedAt()
-        );
-
-        $this->rentsCompleted[$event->rentId()->toString()] = $rentDuration;
+        $this->rentsCompleted[$event->rentId()->toString()] = $event->rentDuration();
         unset($this->rentsStarted[$event->rentId()->toString()]);
 
-        $this->userBonusPoints = UserBonusPoints::addActionBonusPoints(
-            $this->userBonusPoints, $event->actionBonusPoints()->multiplyBy($rentDuration->fullDays())
-        );
+//        $userBonusPoints = UserBonusPoints::addActionBonusPoints(
+//            $this->userBonusPoints, $event->actionBonusPoints()
+//        );
+//
+//        $this->userBonusPoints = $userBonusPoints;
     }
 
     public function boosterActivateWithData(

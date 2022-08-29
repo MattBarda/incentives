@@ -54,4 +54,9 @@ class Booster
     {
         return $this->boosterBonusPoints;
     }
+
+    public function applicableForAction(): BoosterApplicableForAction
+    {
+        return $this->applicableForAction;
+    }
 }

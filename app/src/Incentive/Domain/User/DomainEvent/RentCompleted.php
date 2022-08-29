@@ -5,6 +5,9 @@ namespace App\Incentive\Domain\User\DomainEvent;
 use App\Incentive\Domain\User\ValueObject\ActionBonusPoints;
 use App\Incentive\Domain\User\ValueObject\ActionId;
 use App\Incentive\Domain\User\ValueObject\CompletedAt;
+use App\Incentive\Domain\User\ValueObject\RentDuration;
+use App\Incentive\Domain\User\ValueObject\StartedAt;
+use App\Incentive\Domain\User\ValueObject\UserBonusPoints;
 use App\Incentive\Domain\User\ValueObject\UserId;
 use Broadway\Serializer\Serializable;
 
@@ -12,23 +15,26 @@ class RentCompleted implements Serializable
 {
     private UserId $userId;
     private ActionId $rentId;
-    private CompletedAt $completedAt;
     private ActionBonusPoints $actionBonusPointsPerDay;
+    private RentDuration $rentDuration;
+    private ActionBonusPoints $actionBonusPoints;
 
     public function __construct(
         UserId $userId,
         ActionId $rentId,
-        CompletedAt $completedAt,
-        ActionBonusPoints $actionBonusPointsPerDay
+        ActionBonusPoints $actionBonusPointsPerDay,
+        RentDuration $rentDuration,
+        ActionBonusPoints $actionBonusPoints
     ) {
 
         $this->userId = $userId;
         $this->rentId = $rentId;
-        $this->completedAt = $completedAt;
         $this->actionBonusPointsPerDay = $actionBonusPointsPerDay;
+        $this->rentDuration = $rentDuration;
+        $this->actionBonusPoints = $actionBonusPoints;
     }
 
-    public function getUserId(): UserId
+    public function userId(): UserId
     {
         return $this->userId;
     }
@@ -38,14 +44,19 @@ class RentCompleted implements Serializable
         return $this->rentId;
     }
 
-    public function completedAt(): CompletedAt
+    public function actionBonusPointsPerDay(): ActionBonusPoints
     {
-        return $this->completedAt;
+        return $this->actionBonusPointsPerDay;
+    }
+
+    public function rentDuration(): RentDuration
+    {
+        return $this->rentDuration;
     }
 
     public function actionBonusPoints(): ActionBonusPoints
     {
-        return $this->actionBonusPointsPerDay;
+        return $this->actionBonusPoints;
     }
 
     public static function deserialize(array $data): self
@@ -53,7 +64,11 @@ class RentCompleted implements Serializable
         return new self(
             UserId::fromString($data['userId']),
             ActionId::fromString($data['rentId']),
-            CompletedAt::fromString($data['completedAt']),
+            ActionBonusPoints::fromInt($data['actionBonusPointsPerDay']),
+            RentDuration::fromStartedAtAndCompletedAt(
+                StartedAt::fromString($data['startedAt']),
+                CompletedAt::fromString($data['completedAt'])
+            ),
             ActionBonusPoints::fromInt($data['actionBonusPoints'])
         );
     }
@@ -63,8 +78,11 @@ class RentCompleted implements Serializable
         return [
             'userId' => $this->userId->toString(),
             'rentId' => $this->rentId->toString(),
-            'completedAt' => $this->completedAt->toString(),
-            'actionBonusPoints' => $this->actionBonusPoints()->toInt()
+            'actionBonusPointsPerDay' => $this->actionBonusPointsPerDay->toInt(),
+            'startedAt' => $this->rentDuration->startedAt()->toString(),
+            'completedAt' => $this->rentDuration->completedAt()->toString(),
+            'actionBonusPoints' => $this->actionBonusPoints->toInt(),
+            'fullDays' => $this->rentDuration->fullDays()
         ];
     }
 }

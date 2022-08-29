@@ -100,14 +100,14 @@ class BoosterActivated implements Serializable
     {
         return [
             'userId' => $this->userId->toString(),
-            'boosterId' => $this->userId->toString(),
-            'appliedAt' => $this->appliedAt()->toString(),
-            'activeFrom' => $this->activeRange()->boosterActiveFrom()->toString(),
+            'boosterId' => $this->boosterId->toString(),
+            'appliedAt' => $this->appliedAt->toString(),
+            'activeFrom' => $this->activeRange->boosterActiveFrom()->toString(),
             'activeTo' => $this->activeRange->boosterActiveTo()->toString(),
-            'applicableForAction' => $this->applicableForAction()->toString(),
-            'boosterBonusPoints' => $this->boosterBonusPoints()->pointsAsInt(),
-            'boosterBonusPointsValidForDays' => $this->boosterBonusPoints()->boosterBonusPointsValidFor()->toInt(),
-            'boosterActionsRequired' => $this->boosterActionsRequired()->toInt()
+            'applicableForAction' => $this->applicableForAction->toString(),
+            'boosterBonusPoints' => $this->boosterBonusPoints->pointsAsInt(),
+            'boosterBonusPointsValidForDays' => $this->boosterBonusPoints->boosterBonusPointsValidFor()->toInt(),
+            'boosterActionsRequired' => $this->boosterActionsRequired->toInt()
         ];
     }
 }

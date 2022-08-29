@@ -3,7 +3,6 @@
 namespace App\Incentive\UI\Command;
 
 use App\Incentive\Domain\User\Command\BoosterActivate;
-use App\Incentive\Domain\User\Command\DeliveryComplete;
 use Broadway\CommandHandling\CommandBus;
 use Carbon\Carbon;
 use Ramsey\Uuid\Uuid;
@@ -12,6 +11,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
     'incentives:booster:activate',
@@ -46,6 +46,7 @@ class BoosterActivateCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $io = new SymfonyStyle($input, $output);
         //TODO user id should come from Repository - nextId method
         $boosterId = Uuid::uuid4();
 
@@ -53,6 +54,7 @@ class BoosterActivateCommand extends Command
         $inputData['boosterId'] = $boosterId->toString();
         $this->commandBus->dispatch(BoosterActivate::fromArray($inputData));
 
+        $io->success('Activated booster with id: '. $boosterId);
         return Command::SUCCESS;
     }
 }

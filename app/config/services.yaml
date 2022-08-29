@@ -56,6 +56,23 @@ services:
             - { name: 'console.command' }
 
 
+    App\Incentive\Domain\User\Projector\DeliveryCompletedProjector:
+        tags:
+            - { name: broadway.domain.event_listener }
+
+    App\Incentive\Domain\User\Projector\RideShareCompletedProjector:
+        tags:
+            - { name: broadway.domain.event_listener }
+
+    App\Incentive\Domain\User\Projector\BoosterAppliedProjector:
+        tags:
+            - { name: broadway.domain.event_listener }
+
+    App\Incentive\Domain\User\Projector\RentCompletedProjector:
+        tags:
+            - { name: broadway.domain.event_listener }
+
+
     App\Common\Infrastructure\Cmd\CreateEventStoreCommand:
         arguments:
             $connection: "@doctrine.dbal.default_connection"

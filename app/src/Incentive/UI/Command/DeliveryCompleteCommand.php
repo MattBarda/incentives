@@ -11,6 +11,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
     'incentives:delivery:complete',
@@ -39,6 +40,7 @@ class DeliveryCompleteCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $io = new SymfonyStyle($input, $output);
         //TODO user id should come from Repository - nextId method
         $deliveryId = Uuid::uuid4();
 
@@ -46,6 +48,7 @@ class DeliveryCompleteCommand extends Command
         $inputData['deliveryId'] = $deliveryId->toString();
         $this->commandBus->dispatch(DeliveryComplete::fromArray($inputData));
 
+        $io->success('Completed delivery with id: '. $deliveryId);
         return Command::SUCCESS;
     }
 }

@@ -11,6 +11,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
     'incentives:rideshare:complete',
@@ -39,6 +40,7 @@ class RideShareCompleteCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $io = new SymfonyStyle($input, $output);
         //TODO user id should come from Repository - nextId method
         $rideShareId = Uuid::uuid4();
 
@@ -46,6 +48,7 @@ class RideShareCompleteCommand extends Command
         $inputData['rideShareId'] = $rideShareId->toString();
         $this->commandBus->dispatch(RideShareComplete::fromArray($inputData));
 
+        $io->success('Completed ride share with ID: '. $rideShareId);
         return Command::SUCCESS;
     }
 }

@@ -1,3 +1,13 @@
+## Prerequisites 
+
+The task is done using event sourcing, the Aggregate is named User and that is the class where most of the logic happens
+
+This was my first approach to Event sourcing, the code is still very ruff.
+
+I used a bundle called Broadway as it was the only one still maintained
+
+There is one huge DDD vialotion, which is extending Domain classes with vendors
+
 ## Questions I'd normally ask
 As this is a recruitment task I have made certain assumptions, but normally I would start with asking questions about the domain.
 1. What is our Bounded context? - I assumed it will be Incentives
@@ -13,19 +23,19 @@ As this is a recruitment task I have made certain assumptions, but normally I wo
 4. What happens if bonus points awarded for rent change during the rent duration?
    
 
-4. When does additional points for boosters start counting?
-5. Do additional points for boosters expire at the end of the day or
+5. When does additional points for boosters start counting?
+6. Do additional points for boosters expire at the end of the day or
     - at the exact time first booster activity started (i.e. first delivery of booster)
     - at the exact time first booster activity stopped (i.e. last delivery of the booster)
     - at the time booster started being active?
     - at the time booster stopped being active?
-6. Will it be possible to combine multiple booster actions together in the future?
-7. Are we going to need booster points history/list?
-8. Are the boosters always active during the same time for each day or are they more dynamic>
-9. What happens if booster ranges overlap (1 activated and another one activated after first one)
-10. Can a booster have active date range in the past? - I assumend not
-11. Can there be multiple boosters active at the same time (for different time ranges)? - I assumed not there is ony one active range at the same time
-8. Do we need to pay tax on bonus points?
+7. Will it be possible to combine multiple booster actions together in the future?
+8. Are we going to need booster points history/list?
+9. Are the boosters always active during the same time for each day or are they more dynamic>
+10. What happens if booster ranges overlap (1 activated and another one activated after first one)
+11. Can a booster have active date range in the past? - I assumend not
+12. Can there be multiple boosters active at the same time (for different time ranges)? - I assumed not there is ony one active range at the same time
+13. Do we need to pay tax on bonus points?
 
 #### additional questions:
 
@@ -50,6 +60,17 @@ In order to install the project:
 
 ## Usage
 There are few Symfony commands that allow to interact with the Domain:
+ - Create user: ```bin/console incentives:user:create [username] [userEmail]```
+ - Complete delivery: ```bin/console incentives:delivery:complete [userId]```
+ - Complete rideshare: ```bin/console incentives:rideshare:complete [userId]```
+ - Start rent: ```bin/console incentives:rent:start [userId] [OPTIONAL startedAt: "2022-08-25 14:38:09" (in this format)]```
+ - Complete rent: ```bin/console incentives:rent:complete [userId] [rentId]```
+ - Activate booster: ```bin/console incentives:booster:activate userId [validFrom] [validTo] [applicableForAction] [boosterBonusPoints] [boosterBonusPointsValidFor] [boosterActionsRequired]```
+
+Each of them will return an id needed to interact with other commands
+
+The projections are dumped in app/public, I just didn't have time to properly finish the command to get the number of points for a given date, but the projected data is there
+
 
 ## Process
 
@@ -66,19 +87,11 @@ The general process Can be described in following steps:
    - rideShareComplete
    - rentStart
    - rentEnd
+   - boosterActivate
    - boosterApply
    - MoneyWithdrawn
 8. Then I created the basic folder structure for Event Sourcing
 9. After that I started Thinking about the Aggregate structure
 10. And then I created one by one command, command handler, domain event and User aggregate methods to apply events adding Value objects as needed
-
-TODO's and Notes:
-ActionId instead of id VO per Action,
-Rename RegisterUser to UserRegister - better folder structure, or put handlers inside Command folder
-
-DDD vialotaion - extending domain classes with vendors
-
-Naming the aggregate root entry points could be changed
-
-boosterapplied suggests it was applied f
+11. After creating all the domain events, I started creating needed projectors
 

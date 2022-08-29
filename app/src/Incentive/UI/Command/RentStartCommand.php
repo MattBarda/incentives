@@ -11,6 +11,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
     'incentives:rent:start',
@@ -39,6 +40,7 @@ class RentStartCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $io = new SymfonyStyle($input, $output);
         //TODO user id should come from Repository - nextId method
         $rentId = Uuid::uuid4();
 
@@ -46,6 +48,7 @@ class RentStartCommand extends Command
         $inputData['rentId'] = $rentId->toString();
         $this->commandBus->dispatch(RentStart::fromArray($inputData));
 
+        $io->success('Started rent with id: '. $rentId);
         return Command::SUCCESS;
     }
 }
