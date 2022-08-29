@@ -1,13 +1,3 @@
-## Prerequisites 
-
-The task is done using event sourcing, the Aggregate is named User and that is the class where most of the logic happens
-
-This was my first approach to Event sourcing, the code is still very ruff.
-
-I used a bundle called Broadway as it was the only one still maintained
-
-There is one huge DDD vialotion, which is extending Domain classes with vendors
-
 ## Questions I'd normally ask
 As this is a recruitment task I have made certain assumptions, but normally I would start with asking questions about the domain.
 1. What is our Bounded context? - I assumed it will be Incentives
