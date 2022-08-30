@@ -55,20 +55,49 @@ services:
         tags:
             - { name: 'console.command' }
 
+    App\Incentive\UI\Command\GetUserPointsCommand:
+        arguments:
+            $getUserPointsUseCase: '@App\Incentive\Application\Service\GetUserPointsUseCase'
+        tags:
+            - { name: 'console.command' }
 
-    App\Incentive\Domain\User\Projector\DeliveryCompletedProjector:
+
+    App\Incentive\Application\Service\GetUserPointsUseCase:
+        arguments:
+            $userPointsRepository: '@App\Incentive\Infrastructure\Repository\FileRepository\UserPointsRepository'
+
+
+    App\Incentive\Infrastructure\Repository\FileRepository\UserPointsRepository:
+        arguments:
+            $filePath: "%kernel.project_dir%/public/"
+
+    App\Incentive\Infrastructure\Repository\Projector\UserWasRegisteredProjector:
+        arguments:
+            $userPointsRepository: '@App\Incentive\Infrastructure\Repository\FileRepository\UserPointsRepository'
         tags:
             - { name: broadway.domain.event_listener }
 
-    App\Incentive\Domain\User\Projector\RideShareCompletedProjector:
+    App\Incentive\Infrastructure\Repository\Projector\DeliveryCompletedProjector:
+        arguments:
+            $userPointsRepository: '@App\Incentive\Infrastructure\Repository\FileRepository\UserPointsRepository'
         tags:
             - { name: broadway.domain.event_listener }
 
-    App\Incentive\Domain\User\Projector\BoosterAppliedProjector:
+    App\Incentive\Infrastructure\Repository\Projector\RideShareCompletedProjector:
+        arguments:
+            $userPointsRepository: '@App\Incentive\Infrastructure\Repository\FileRepository\UserPointsRepository'
         tags:
             - { name: broadway.domain.event_listener }
 
-    App\Incentive\Domain\User\Projector\RentCompletedProjector:
+    App\Incentive\Infrastructure\Repository\Projector\BoosterAppliedProjector:
+        arguments:
+            $userPointsRepository: '@App\Incentive\Infrastructure\Repository\FileRepository\UserPointsRepository'
+        tags:
+            - { name: broadway.domain.event_listener }
+
+    App\Incentive\Infrastructure\Repository\Projector\RentCompletedProjector:
+        arguments:
+            $userPointsRepository: '@App\Incentive\Infrastructure\Repository\FileRepository\UserPointsRepository'
         tags:
             - { name: broadway.domain.event_listener }
 
