@@ -32,8 +32,8 @@ class RentCompleteTest extends RentCompleteHandlerTest
         $rentId = '00000000-0000-0000-0000-000000000001';
         $rentStartedAt = Carbon::create('2022-08-27 20:00:00');
         $rentCompletedAt = Carbon::create('2022-08-27 20:00:01');
-        $rentBonusPointsPerDay = 2;
-        $rentBonusPoints = 0;
+        $expectedRentBonusPointsPerDay = 2;
+        $expectedRentBonusPoints = 0;
 
         $this->scenario
             ->withAggregateId($userId)
@@ -54,12 +54,12 @@ class RentCompleteTest extends RentCompleteHandlerTest
                 new RentCompleted(
                     UserId::fromString($userId),
                     ActionId::fromString($rentId),
-                    ActionBonusPoints::fromInt($rentBonusPointsPerDay),
+                    ActionBonusPoints::fromInt($expectedRentBonusPointsPerDay),
                     RentDuration::fromStartedAtAndCompletedAt(
                         StartedAt::fromString($rentStartedAt),
                         CompletedAt::fromString($rentCompletedAt)
                     ),
-                    ActionBonusPoints::fromInt($rentBonusPoints)
+                    ActionBonusPoints::fromInt($expectedRentBonusPoints)
                 ),
             ]);
     }
@@ -67,7 +67,7 @@ class RentCompleteTest extends RentCompleteHandlerTest
     /**
      * @test
      */
-    public function it_fails_when_trying_to_complete_a_rent_that_was_not_started()
+    public function it_throws_an_exception_when_trying_to_complete_a_rent_that_was_not_started()
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage(
@@ -81,8 +81,96 @@ class RentCompleteTest extends RentCompleteHandlerTest
         $rentId = '00000000-0000-0000-0000-000000000001';
         $rentStartedAt = Carbon::create('2022-08-27 20:00:00');
         $rentCompletedAt = Carbon::create('2022-08-27 20:00:01');
+        $expectedRentBonusPointsPerDay = 2;
+        $expectedRentBonusPoints = 2;
+
+        $this->scenario
+            ->withAggregateId($userId)
+            ->given([
+                new UserWasRegistered(
+                    UserId::fromString($userId),
+                    UserName::fromString($username),
+                    EmailAddress::fromString($userEmailAddress)
+                )
+            ])
+            ->when(new RentComplete($userId, $rentId, $rentCompletedAt))
+            ->then([
+                new RentCompleted(
+                    UserId::fromString($userId),
+                    ActionId::fromString($rentId),
+                    ActionBonusPoints::fromInt($expectedRentBonusPointsPerDay),
+                    RentDuration::fromStartedAtAndCompletedAt(
+                        StartedAt::fromString($rentStartedAt),
+                        CompletedAt::fromString($rentCompletedAt)
+                    ),
+                    ActionBonusPoints::fromInt($expectedRentBonusPoints)
+                ),
+            ]);
+    }
+
+    /**
+     * @test
+     */
+    public function it_adds_points_for_rent_that_duration_longer_then_one_day()
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage(
+            'Trying to complete rent with id: 00000000-0000-0000-0000-000000000001 that was not started'
+        );
+
+        $userId = '00000000-0000-0000-0000-000000000000';
+        $username = 'username';
+        $userEmailAddress = 'user@domain.com';
+
+        $rentId = '00000000-0000-0000-0000-000000000001';
+        $rentStartedAt = Carbon::create('2022-08-27 20:00:00');
+        $rentCompletedAt = Carbon::create('2022-08-28 20:00:01');
         $rentBonusPointsPerDay = 2;
-        $rentBonusPoints = 0;
+        $rentBonusPoints = 2;
+
+        $this->scenario
+            ->withAggregateId($userId)
+            ->given([
+                new UserWasRegistered(
+                    UserId::fromString($userId),
+                    UserName::fromString($username),
+                    EmailAddress::fromString($userEmailAddress)
+                )
+            ])
+            ->when(new RentComplete($userId, $rentId, $rentCompletedAt))
+            ->then([
+                new RentCompleted(
+                    UserId::fromString($userId),
+                    ActionId::fromString($rentId),
+                    ActionBonusPoints::fromInt($rentBonusPointsPerDay),
+                    RentDuration::fromStartedAtAndCompletedAt(
+                        StartedAt::fromString($rentStartedAt),
+                        CompletedAt::fromString($rentCompletedAt)
+                    ),
+                    ActionBonusPoints::fromInt($rentBonusPoints)
+                ),
+            ]);
+    }
+
+    /**
+     * @test
+     */
+    public function it_multiplies_points_by_each_day_of_rent()
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage(
+            'Trying to complete rent with id: 00000000-0000-0000-0000-000000000001 that was not started'
+        );
+
+        $userId = '00000000-0000-0000-0000-000000000000';
+        $username = 'username';
+        $userEmailAddress = 'user@domain.com';
+
+        $rentId = '00000000-0000-0000-0000-000000000001';
+        $rentStartedAt = Carbon::create('2022-08-10 20:00:00');
+        $rentCompletedAt = Carbon::create('2022-08-15 20:00:01');
+        $rentBonusPointsPerDay = 2;
+        $rentBonusPoints = 10;
 
         $this->scenario
             ->withAggregateId($userId)

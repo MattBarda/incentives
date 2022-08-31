@@ -31,7 +31,7 @@ class BoosterActivate
         string $validTo,
         string $applicableForAction,
         int $boosterBonusPoints,
-        string $boosterBonusPointsValidFor,
+        int $boosterBonusPointsValidFor,
         int $boosterActionsRequired
     ) {
         $this->userId = UserId::fromString($userId);
