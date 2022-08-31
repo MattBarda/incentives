@@ -45,7 +45,7 @@ class RideShareCompleteTest extends RideShareCompleteHandlerTest
                     ActionId::fromString($rideShareId),
                     CompletedAt::fromString($rideShareCompletedAt),
                     ActionBonusPoints::fromInt($rideShareBonusPoints)
-                ),
+                )
             ]);
     }
 }
