@@ -102,22 +102,20 @@ class User extends EventSourcedAggregateRoot
                 $activeBooster->activeRange()->boosterActiveFrom()->toCarbon(),
                 $activeBooster->activeRange()->boosterActiveTo()->toCarbon()
             );
+            $isDeliveryCountEqualToRequiredActionsCount =
+                count($this->deliveriesApplicableForBooster) === $activeBooster->boosterActionsRequired()->toInt();
 
-            if ($isDeliveryInBoosterRange) {
-                if (count($this->deliveriesApplicableForBooster) === $activeBooster->boosterActionsRequired()->toInt()) {
-
-                    $this->apply(
-                        new BoosterApplied(
-                            $this->userId,
-                            ExpiringUserBonusPoints::fromUserBonusPointsAndExpirationDate(
-                                UserBonusPoints::fromBoosterBonusPoints($activeBooster->boosterBonusPoints()),
-                                ExpirationDate::fromBoosterBonusPoints($activeBooster->boosterBonusPoints()),
-                            ),
-                            $activeBooster->applicableForAction()
-                        )
-                    );
-
-                }
+            if ($isDeliveryInBoosterRange && $isDeliveryCountEqualToRequiredActionsCount) {
+                $this->apply(
+                    new BoosterApplied(
+                        $this->userId,
+                        ExpiringUserBonusPoints::fromUserBonusPointsAndExpirationDate(
+                            UserBonusPoints::fromBoosterBonusPoints($activeBooster->boosterBonusPoints()),
+                            ExpirationDate::fromBoosterBonusPoints($activeBooster->boosterBonusPoints()),
+                        ),
+                        $activeBooster->applicableForAction()
+                    )
+                );
             }
         }
     }
@@ -143,7 +141,6 @@ class User extends EventSourcedAggregateRoot
 
             if ($isDeliveryInBoosterRange) {
                 $this->deliveriesApplicableForBooster[$event->deliveryId()->toString()] = $event->deliveryId()->toString();
-
             } else {
                 $this->deliveriesApplicableForBooster = [];
             }
@@ -181,22 +178,20 @@ class User extends EventSourcedAggregateRoot
                 $activeBooster->activeRange()->boosterActiveFrom()->toCarbon(),
                 $activeBooster->activeRange()->boosterActiveTo()->toCarbon()
             );
+            $isRideShareCountEqualToRequiredActionsCount =
+                count($this->rideSharesApplicableForBooster) === $activeBooster->boosterActionsRequired()->toInt();
 
-            if ($isRideShareInBoosterRange) {
-                if (count($this->rideSharesApplicableForBooster) === $activeBooster->boosterActionsRequired()->toInt()) {
-
-                    $this->apply(
-                        new BoosterApplied(
-                            $this->userId,
-                            ExpiringUserBonusPoints::fromUserBonusPointsAndExpirationDate(
-                                UserBonusPoints::fromBoosterBonusPoints($activeBooster->boosterBonusPoints()),
-                                ExpirationDate::fromBoosterBonusPoints($activeBooster->boosterBonusPoints()),
-                            ),
-                            $activeBooster->applicableForAction()
-                        )
-                    );
-
-                }
+            if ($isRideShareInBoosterRange && $isRideShareCountEqualToRequiredActionsCount) {
+                $this->apply(
+                    new BoosterApplied(
+                        $this->userId,
+                        ExpiringUserBonusPoints::fromUserBonusPointsAndExpirationDate(
+                            UserBonusPoints::fromBoosterBonusPoints($activeBooster->boosterBonusPoints()),
+                            ExpirationDate::fromBoosterBonusPoints($activeBooster->boosterBonusPoints()),
+                        ),
+                        $activeBooster->applicableForAction()
+                    )
+                );
             }
         }
     }
@@ -281,11 +276,11 @@ class User extends EventSourcedAggregateRoot
         $this->rentsCompleted[$event->rentId()->toString()] = $event->rentDuration();
         unset($this->rentsStarted[$event->rentId()->toString()]);
 
-//        $userBonusPoints = UserBonusPoints::addActionBonusPoints(
-//            $this->userBonusPoints, $event->actionBonusPoints()
-//        );
-//
-//        $this->userBonusPoints = $userBonusPoints;
+        $userBonusPoints = UserBonusPoints::addActionBonusPoints(
+            $this->userBonusPoints, $event->actionBonusPoints()
+        );
+
+        $this->userBonusPoints = $userBonusPoints;
     }
 
     public function boosterActivateWithData(

@@ -39,7 +39,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Incentive\\Tests\\": "tests/"
+            "App\\Tests\\": "tests/"
         }
     },
     "replace": {
@@ -71,5 +71,11 @@
             "allow-contrib": false,
             "require": "6.1.*"
         }
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-latest",
+        "broadway/coding-standard": "^1.2",
+        "phpstan/phpstan": "^1.8",
+        "phpunit/phpunit": "^9.5"
     }
 }
