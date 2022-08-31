@@ -17,7 +17,6 @@ final class UserId
 
     public static function fromString(string $todoId): self
     {
-        //TODO might be better to throw some sort of domain exception
         Assert::uuid($todoId);
 
         return new self(Uuid::fromString($todoId));

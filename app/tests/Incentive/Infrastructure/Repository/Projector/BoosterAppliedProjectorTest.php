@@ -58,7 +58,5 @@ class BoosterAppliedProjectorTest extends TestCase
                 Carbon::create('2022-09-17 21:00:00')
             )
         );
-
-
     }
 }

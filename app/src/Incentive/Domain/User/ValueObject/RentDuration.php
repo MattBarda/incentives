@@ -27,17 +27,11 @@ class RentDuration
         return  $this->interval->days;
     }
 
-    /**
-     * @return StartedAt
-     */
     public function startedAt(): StartedAt
     {
         return $this->startedAt;
     }
 
-    /**
-     * @return CompletedAt
-     */
     public function completedAt(): CompletedAt
     {
         return $this->completedAt;

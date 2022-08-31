@@ -21,7 +21,6 @@ class ExpirationDate
 
     public static function fromString(string $expirationDate): self
     {
-        //TODO do better validation
         if (!Carbon::hasFormat($expirationDate, self::FORMAT)) {
             throw new InvalidDateFormatException($expirationDate, self::FORMAT);
         }

@@ -11,7 +11,6 @@ class ExpiringUserBonusPoints
         UserBonusPoints $userBonusPoints,
         ExpirationDate $expirationDate
     ) {
-
         $this->userBonusPoints = $userBonusPoints;
         $this->expirationDate = $expirationDate;
     }

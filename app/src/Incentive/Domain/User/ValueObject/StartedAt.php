@@ -13,7 +13,6 @@ class StartedAt
 
     public static function fromString(string $startedAt): self
     {
-        //TODO do better validation
         if (!Carbon::hasFormat($startedAt, self::FORMAT)) {
             throw new InvalidDateFormatException($startedAt, self::FORMAT);
         }

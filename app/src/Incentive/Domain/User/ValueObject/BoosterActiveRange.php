@@ -20,11 +20,6 @@ class BoosterActiveRange
                 'Booster activeFrom is after activeTo'
             );
         }
-        //TODO figure out where to put this check as it breaks when reconstituteFromEventStream happens,
-        // unless we want to activate boosters applicable for past actions
-//        if ($boosterActiveFrom->toCarbon()->isBefore(Carbon::now())) {
-//            throw new BoosterRangeException('Booster can not start in the past');
-//        }
         $this->boosterActiveFrom = $boosterActiveFrom;
         $this->boosterActiveTo = $boosterActiveTo;
         $this->boosterDuration = $boosterActiveFrom->toCarbon()->diff($boosterActiveTo->toCarbon());
@@ -57,7 +52,7 @@ class BoosterActiveRange
     /**
      * @return DateInterval
      */
-    public function boosterDurationASDateInterval(): DateInterval
+    public function boosterDurationAsDateInterval(): DateInterval
     {
         return $this->boosterDuration;
     }

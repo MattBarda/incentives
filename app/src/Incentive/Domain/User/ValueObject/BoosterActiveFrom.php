@@ -13,7 +13,6 @@ class BoosterActiveFrom
 
     public static function fromString(string $validFrom): self
     {
-        //TODO do better validation
         if (!Carbon::hasFormat($validFrom, self::FORMAT)) {
             throw new InvalidDateFormatException($validFrom, self::FORMAT);
         }
