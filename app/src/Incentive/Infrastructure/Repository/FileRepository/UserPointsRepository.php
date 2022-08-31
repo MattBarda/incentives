@@ -18,7 +18,7 @@ class UserPointsRepository implements UserPointsRepositoryInterface
         $this->filePath = $filePath;
     }
 
-    public function save(UserPoints $userPoints)
+    public function save(UserPoints $userPoints): void
     {
         $fileName = $this->filePath . self::FILE_PREFIX . $userPoints->getUserId() . '.json';
         $savedUserPoints = $this->getSavedUserPointsFrom($fileName);

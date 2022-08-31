@@ -15,7 +15,7 @@ class UserWasRegisteredProjector extends Projector
         $this->userPointsRepository = $userPointsRepository;
     }
 
-    protected function applyUserWasRegistered(UserWasRegistered $event)
+    public function applyUserWasRegistered(UserWasRegistered $event): void
     {
         $this->userPointsRepository->init($event->userId()->toString());
     }

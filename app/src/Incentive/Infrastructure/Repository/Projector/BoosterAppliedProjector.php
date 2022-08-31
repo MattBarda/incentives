@@ -16,7 +16,7 @@ class BoosterAppliedProjector extends Projector
         $this->userPointsRepository = $userPointsRepository;
     }
 
-    protected function applyBoosterApplied(BoosterApplied $event): void
+    public function applyBoosterApplied(BoosterApplied $event): void
     {
         $userPoints = new UserPoints(
             $event->userId()->toString(),

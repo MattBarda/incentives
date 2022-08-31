@@ -16,7 +16,7 @@ class RentCompletedProjector extends Projector
         $this->userPointsRepository = $userPointsRepository;
     }
 
-    protected function applyRentCompleted(RentCompleted $event): void
+    public function applyRentCompleted(RentCompleted $event): void
     {
         $userPoints = new UserPoints(
             $event->userId()->toString(),

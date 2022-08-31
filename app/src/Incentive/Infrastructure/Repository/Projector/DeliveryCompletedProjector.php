@@ -16,7 +16,7 @@ class DeliveryCompletedProjector extends Projector
         $this->userPointsRepository = $userPointsRepository;
     }
 
-    protected function applyDeliveryCompleted(DeliveryCompleted $event): void
+    public function applyDeliveryCompleted(DeliveryCompleted $event): void
     {
         $userPoints = new UserPoints(
             $event->userId()->toString(),

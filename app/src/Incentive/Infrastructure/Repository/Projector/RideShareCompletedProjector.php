@@ -16,7 +16,7 @@ class RideShareCompletedProjector extends Projector
         $this->userPointsRepository = $userPointsRepository;
     }
 
-    protected function applyRideShareCompleted(RideShareCompleted $event): void
+    public function applyRideShareCompleted(RideShareCompleted $event): void
     {
         $userPoints = new UserPoints(
             $event->userId()->toString(),
