@@ -1,3 +1,12 @@
+## General info
+The task is done with event sourcing
+ - there is only one global event stream in the application, Ideally there could be event stream per User
+ - There is big violation of DDD - most of the classes are extending from vendor directory - possible solution is to put all the needed code from vendors into the Common directory
+ - For command bus I am using broadway simple command bus, This can be improved with Symfony Messenger
+ - I treated Uuid and Carbon as part of the domain for simplification
+ - The code is still not perfect, first thing I'd try to improve is the Value objects as not all the naming is correct (I think)
+ - For The projections I used file storage and the read model also is quite simplistic
+
 ## Questions I'd normally ask
 As this is a recruitment task I have made certain assumptions, but normally I would start with asking questions about the domain.
 1. What is our Bounded context? - I assumed it will be Incentives
@@ -56,6 +65,7 @@ There are few Symfony commands that allow to interact with the Domain:
  - Start rent: ```bin/console incentives:rent:start [userId] [OPTIONAL startedAt: "2022-08-25 14:38:09" (in this format)]```
  - Complete rent: ```bin/console incentives:rent:complete [userId] [rentId]```
  - Activate booster: ```bin/console incentives:booster:activate userId [validFrom] [validTo] [applicableForAction] [boosterBonusPoints] [boosterBonusPointsValidFor] [boosterActionsRequired]```
+ - Get user points for a given date: ```bin/console incentives:user:points [userId] [OPTIONAL pointsForDate "2022-08-25 14:38:09" (in this format)]```
 
 Each of them will return an id needed to interact with other commands
 
@@ -79,9 +89,9 @@ The general process Can be described in following steps:
    - rentEnd
    - boosterActivate
    - boosterApply
-   - MoneyWithdrawn
+   - pointsWithdraw - This functionality is not implemented as it feels to me like it's a part of another bounded context
 8. Then I created the basic folder structure for Event Sourcing
 9. After that I started Thinking about the Aggregate structure
 10. And then I created one by one command, command handler, domain event and User aggregate methods to apply events adding Value objects as needed
 11. After creating all the domain events, I started creating needed projectors
-
+12. When I had all the projectors I created read model to read user points for a given date
