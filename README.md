@@ -54,7 +54,7 @@ In order to install the project:
 3. ```ctrl+t```
 4. ```docker exec -it incentives-php8-container bash```
 5. ```composer install```
-6. ```bin/console doctrine:databse:create```
+6. ```bin/console doctrine:database:create```
 7. ```broadway:event-store:create```
 
 ## Usage

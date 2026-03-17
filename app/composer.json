@@ -13,12 +13,12 @@
         "doctrine/orm": "^2.13",
         "nesbot/carbon": "^2.61",
         "ramsey/uuid": "^4.4",
-        "symfony/console": "6.1.*",
-        "symfony/dotenv": "6.1.*",
+        "symfony/console": "6.4.*",
+        "symfony/dotenv": "6.4.*",
         "symfony/flex": "^2",
-        "symfony/framework-bundle": "6.1.*",
-        "symfony/runtime": "6.1.*",
-        "symfony/yaml": "6.1.*"
+        "symfony/framework-bundle": "6.4.*",
+        "symfony/runtime": "6.4.*",
+        "symfony/yaml": "6.4.*"
     },
     "config": {
         "allow-plugins": {
@@ -69,7 +69,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "6.1.*"
+            "require": "6.4.*"
         }
     },
     "require-dev": {
