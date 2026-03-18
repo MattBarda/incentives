@@ -1,0 +1,12 @@
+default:
+    suites:
+        incentive:
+            paths:
+                - '%paths.base%/features/incentive'
+            contexts:
+                - UserRegistrationContext
+    autoload:
+        '': '%paths.base%/features/bootstrap'
+    formatters:
+        pretty:
+            verbose: true

@@ -73,9 +73,11 @@
         }
     },
     "require-dev": {
-        "roave/security-advisories": "dev-latest",
+        "behat/behat": "^3.29",
         "broadway/coding-standard": "^1.2",
+        "friends-of-behat/symfony-extension": "^2.6",
         "phpstan/phpstan": "^1.8",
-        "phpunit/phpunit": "^9.5"
+        "phpunit/phpunit": "^9.5",
+        "roave/security-advisories": "dev-latest"
     }
 }
